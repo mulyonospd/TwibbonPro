@@ -103,7 +103,20 @@
         body[data-theme="contrast"] .btn-theme-back {
             background-color: #000 !important; color: #22c55e !important; border: 1px solid #22c55e !important;
         }
+        
+        /* Mobile Editor & Landscape Overrides */
+        @media (max-width: 1023px) {
+            body.editor-active header { display: none !important; }
+            body.editor-active #editor-page { height: 100dvh !important; margin: 0; max-width: 100%; padding-top: 0.5rem; }
+        }
+        @media (max-width: 1023px) and (orientation: landscape) {
+            #editor-page { flex-direction: row !important; padding: 0.5rem !important; gap: 0.5rem !important; }
+            .canvas-area { width: 45% !important; height: 100% !important; flex: none !important; }
+            .tools-area { width: 55% !important; height: 100% !important; padding-bottom: 0 !important; flex: none !important; margin-top: 0 !important; }
+            #canvas-container { max-height: 65vh !important; }
+        }
         </style>
+
 </head>
 <body class="flex flex-col min-h-screen" data-theme="light">
 
@@ -205,63 +218,83 @@
     <section id="editor-page" class="hidden w-full max-w-7xl mx-auto h-[calc(100dvh-90px)] flex-col lg:flex-row gap-2 lg:gap-6 p-2 lg:p-4">
         
         <!-- AREA KIRI: Kanvas -->
-        <div class="w-full lg:w-3/5 h-[60%] lg:h-full flex flex-col z-20 flex-shrink-0">
-            
-
-            <!-- Wadah Kanvas & Rasio -->
-            <div class="flex-grow bg-white p-3 lg:p-4 rounded-3xl shadow-xl border border-gray-100 flex flex-col justify-center items-center overflow-hidden">
+        <div class="canvas-area w-full lg:w-3/5 h-[58%] sm:h-[60%] lg:h-full flex flex-col z-20 flex-shrink-0">
+            <div class="flex-grow bg-white p-2 lg:p-4 rounded-2xl lg:rounded-3xl shadow-xl border border-gray-100 flex flex-col justify-center items-center overflow-hidden relative">
                 
-                <!-- Pilihan Rasio Gambar -->
-                <div class="w-full max-w-[500px] flex gap-2 mb-4">
-                    <button onclick="changeRatio('1:1')" id="btn-ratio-1" class="flex-1 bg-indigo-600 text-white font-bold py-2 rounded-xl text-xs sm:text-sm shadow transition-colors">1:1 (IG Feed)</button>
-                    <button onclick="changeRatio('9:16')" id="btn-ratio-2" class="flex-1 bg-gray-50 hover:bg-gray-200 border border-gray-200 text-gray-700 font-bold py-2 rounded-xl text-xs sm:text-sm shadow-sm transition-colors">9:16 (Status WA)</button>
-                    <button onclick="changeRatio('16:9')" id="btn-ratio-3" class="flex-1 bg-gray-50 hover:bg-gray-200 border border-gray-200 text-gray-700 font-bold py-2 rounded-xl text-xs sm:text-sm shadow-sm transition-colors">16:9 (FB/X)</button>
+                <div class="flex flex-row w-full h-full items-center justify-center gap-1.5 sm:gap-3">
+                    
+                    <!-- MOBILE SIDEBAR (Kiri) -->
+                    <div class="flex lg:hidden flex-col gap-1.5 shrink-0 w-[40px] sm:w-[45px] h-full justify-center">
+                        <button onclick="changeRatio('1:1')" id="btn-ratio-1-m" class="w-full aspect-square bg-indigo-600 text-white rounded-xl text-sm shadow transition-colors flex items-center justify-center" title="1:1 IG Feed"><i class="fa-solid fa-square"></i></button>
+                        <button onclick="changeRatio('9:16')" id="btn-ratio-2-m" class="w-full aspect-square bg-gray-50 hover:bg-gray-200 border border-gray-200 text-gray-700 rounded-xl text-sm shadow-sm transition-colors flex items-center justify-center" title="9:16 WA"><i class="fa-solid fa-mobile-screen"></i></button>
+                        <button onclick="changeRatio('16:9')" id="btn-ratio-3-m" class="w-full aspect-square bg-gray-50 hover:bg-gray-200 border border-gray-200 text-gray-700 rounded-xl text-sm shadow-sm transition-colors flex items-center justify-center" title="16:9 FB/X"><i class="fa-solid fa-display"></i></button>
+                        
+                        <div class="w-full h-px bg-gray-200 my-1 rounded"></div>
+                        
+                        <button onclick="goHome()" class="btn-theme-back w-full aspect-square bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-xl flex items-center justify-center shadow-sm text-sm sm:text-base" title="Kembali"><i class="fa-solid fa-arrow-left"></i></button>
+                        <button onclick="undo()" class="w-full aspect-square bg-yellow-400 hover:bg-yellow-500 text-yellow-900 rounded-xl flex items-center justify-center shadow-sm text-sm sm:text-base" title="Undo"><i class="fa-solid fa-rotate-left"></i></button>
+                        <button onclick="redo()" class="w-full aspect-square bg-blue-400 hover:bg-blue-500 text-blue-900 rounded-xl flex items-center justify-center shadow-sm text-sm sm:text-base" title="Redo"><i class="fa-solid fa-rotate-right"></i></button>
+                        <button onclick="resetLayer()" class="w-full aspect-square bg-orange-400 hover:bg-orange-500 text-orange-900 rounded-xl flex items-center justify-center shadow-sm text-sm sm:text-base" title="Reset"><i class="fa-solid fa-arrows-rotate"></i></button>
+                        <button onclick="buatBaru()" class="w-full aspect-square bg-red-500 hover:bg-red-600 text-white rounded-xl flex items-center justify-center shadow-sm text-sm sm:text-base" title="Baru"><i class="fa-solid fa-trash-can"></i></button>
+                    </div>
+
+                    <!-- CANVAS CONTENT -->
+                    <div class="flex flex-col w-full h-full items-center justify-center max-w-[500px] overflow-hidden">
+                        
+                        <!-- Desktop Ratio -->
+                        <div class="hidden lg:flex w-full gap-2 mb-4">
+                            <button onclick="changeRatio('1:1')" id="btn-ratio-1" class="flex-1 bg-indigo-600 text-white font-bold py-2 rounded-xl text-xs sm:text-sm shadow transition-colors">1:1 (IG Feed)</button>
+                            <button onclick="changeRatio('9:16')" id="btn-ratio-2" class="flex-1 bg-gray-50 hover:bg-gray-200 border border-gray-200 text-gray-700 font-bold py-2 rounded-xl text-xs sm:text-sm shadow-sm transition-colors">9:16 (Status WA)</button>
+                            <button onclick="changeRatio('16:9')" id="btn-ratio-3" class="flex-1 bg-gray-50 hover:bg-gray-200 border border-gray-200 text-gray-700 font-bold py-2 rounded-xl text-xs sm:text-sm shadow-sm transition-colors">16:9 (FB/X)</button>
+                        </div>
+
+                        <!-- Canvas Wrapper -->
+                        <div id="canvas-container" class="w-full bg-gray-100 border-2 border-dashed border-gray-300 rounded-xl lg:rounded-2xl flex items-center justify-center relative overflow-hidden mx-auto transition-all duration-300 max-h-[60vh] lg:max-h-[65vh]" style="aspect-ratio: 1/1; max-width: 500px;">
+                            <p id="canvas-placeholder" class="text-gray-400 text-center px-2 font-medium select-none absolute z-0 pointer-events-none text-xs sm:text-sm">
+                                <i class="fa-regular fa-image text-4xl mb-2"></i><br>Area Kanvas
+                            </p>
+                            <canvas id="editor-canvas" class="w-full h-full object-contain relative z-10 cursor-grab active:cursor-grabbing" width="1080" height="1080"></canvas>
+                        </div>
+
+                        <!-- Desktop Actions -->
+                        <div class="hidden lg:flex justify-between items-center w-full mt-4 gap-2">
+                            <button onclick="goHome()" class="btn-theme-back flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-1 rounded-xl shadow-sm transition-colors text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1">
+                                <i class="fa-solid fa-arrow-left"></i> Kembali
+                            </button>
+                            <button onclick="undo()" class="flex-1 bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-bold py-2 px-1 rounded-xl shadow-sm transition-colors text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1">
+                                <i class="fa-solid fa-rotate-left"></i> Undo
+                            </button>
+                            <button onclick="redo()" class="flex-1 bg-blue-400 hover:bg-blue-500 text-blue-900 font-bold py-2 px-1 rounded-xl shadow-sm transition-colors text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1">
+                                <i class="fa-solid fa-rotate-right"></i> Redo
+                            </button>
+                            <button onclick="resetLayer()" class="flex-1 bg-orange-400 hover:bg-orange-500 text-orange-900 font-bold py-2 px-1 rounded-xl shadow-sm transition-colors text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1">
+                                <i class="fa-solid fa-arrows-rotate"></i> Reset
+                            </button>
+                            <button onclick="buatBaru()" class="flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-1 rounded-xl shadow-sm transition-colors text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1">
+                                <i class="fa-solid fa-trash-can"></i> Baru
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Wadah kanvas dinamis (max width disesuaikan agar tinggi 9:16 tidak bocor) -->
-                <div id="canvas-container" class="w-full max-w-[500px] bg-gray-100 border-2 border-dashed border-gray-300 rounded-2xl flex items-center justify-center relative overflow-hidden mb-3 mx-auto transition-all duration-300 min-h-[150px] max-h-[40vh] lg:max-h-[60vh]" style="aspect-ratio: 1/1;">
-                    <p id="canvas-placeholder" class="text-gray-400 text-center px-4 font-medium select-none absolute z-0 pointer-events-none">
-                        <i class="fa-regular fa-image text-5xl mb-3"></i><br>Area Kanvas<br>
-                        <span class="text-sm font-normal">Hasil gabungan akan muncul di sini</span>
-                    </p>
-                    <canvas id="editor-canvas" class="w-full h-full object-contain relative z-10 cursor-grab active:cursor-grabbing" width="1080" height="1080"></canvas>
-                </div>
-
-                <div class="flex justify-between items-center w-full mt-2 mb-4 max-w-[500px] mx-auto gap-1 sm:gap-2">
-                <button onclick="goHome()" class="btn-theme-back flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-1 rounded-xl shadow-sm transition-colors text-xs sm:text-sm font-bold flex flex-col sm:flex-row items-center justify-center gap-1">
-                    <i class="fa-solid fa-arrow-left"></i> Kembali
-                </button>
-                <button onclick="undo()" class="flex-1 bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-bold py-2 px-1 rounded-xl shadow-sm transition-colors text-xs sm:text-sm font-bold flex flex-col sm:flex-row items-center justify-center gap-1">
-                    <i class="fa-solid fa-rotate-left"></i> Undo
-                </button>
-                <button onclick="redo()" class="flex-1 bg-blue-400 hover:bg-blue-500 text-blue-900 font-bold py-2 px-1 rounded-xl shadow-sm transition-colors text-xs sm:text-sm font-bold flex flex-col sm:flex-row items-center justify-center gap-1">
-                    <i class="fa-solid fa-rotate-right"></i> Redo
-                </button>
-                <button onclick="resetLayer()" class="flex-1 bg-orange-400 hover:bg-orange-500 text-orange-900 font-bold py-2 px-1 rounded-xl shadow-sm transition-colors text-xs sm:text-sm font-bold flex flex-col sm:flex-row items-center justify-center gap-1">
-                    <i class="fa-solid fa-arrows-rotate"></i> Reset
-                </button>
-                <button onclick="buatBaru()" class="flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-1 rounded-xl shadow-sm transition-colors text-xs sm:text-sm font-bold flex flex-col sm:flex-row items-center justify-center gap-1">
-                    <i class="fa-solid fa-trash-can"></i> Baru
-                </button>
-            </div>
-
-                <!-- Kontrol Ekspor (SD, HD, Full HD) -->
-                <div class="w-full max-w-[500px] flex flex-col sm:flex-row gap-3 justify-center">
-                    <select id="export-quality" class="bg-gray-50 border border-gray-300 text-gray-900 py-3 px-4 rounded-xl font-bold outline-none flex-grow focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all cursor-pointer">
-                        <option value="480">Ukuran Mini (VGA)</option>
-                        <option value="720">Kualitas Standar (SD)</option>
-                        <option value="1080" selected>Kualitas Tinggi (HD)</option>
-                        <option value="1440">Kualitas Super (Full HD+)</option>
+                <!-- Kontrol Ekspor 1 baris -->
+                <div class="w-full max-w-[500px] flex flex-row gap-2 mt-3 lg:mt-4 justify-center shrink-0">
+                    <select id="export-quality" class="bg-gray-50 border border-gray-300 text-gray-900 py-2 px-2 text-xs sm:text-sm lg:text-base lg:py-3 lg:px-4 rounded-xl font-bold outline-none flex-grow focus:border-indigo-500 transition-all cursor-pointer">
+                        <option value="480">Mini (VGA)</option>
+                        <option value="720">Standar (SD)</option>
+                        <option value="1080" selected>Tinggi (HD)</option>
+                        <option value="1440">Super (FHD+)</option>
                     </select>
-                    <button onclick="downloadTwibbon()" class="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white py-3 px-6 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all whitespace-nowrap">
-                        <i class="fa-solid fa-download mr-2"></i> Unduh
+                    <button onclick="downloadTwibbon()" class="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white py-2 px-4 lg:py-3 lg:px-6 rounded-xl font-bold text-sm lg:text-lg shadow-lg hover:shadow-xl transition-all whitespace-nowrap flex items-center justify-center">
+                        <i class="fa-solid fa-download mr-1.5 lg:mr-2"></i> Unduh
                     </button>
                 </div>
+                
             </div>
         </div>
 
         <!-- AREA KANAN: Panel Tool -->
-        <div class="w-full lg:w-2/5 flex-1 overflow-y-auto custom-scroll pb-6 pr-2 space-y-5 z-10 bg-white lg:bg-transparent rounded-3xl p-3 lg:p-0 shadow-lg lg:shadow-none border border-gray-100 lg:border-none">
+        <div class="tools-area w-full lg:w-2/5 flex-1 overflow-y-auto custom-scroll pb-6 pr-1 sm:pr-2 space-y-4 lg:space-y-5 z-10 bg-white lg:bg-transparent rounded-2xl lg:rounded-3xl p-3 lg:p-0 shadow-lg lg:shadow-none border border-gray-100 lg:border-none">
             
             <!-- PANEL 1: BINGKAI -->
             <div class="bg-white p-5 rounded-3xl shadow-lg border border-gray-100">
@@ -508,6 +541,7 @@
             landingPage.classList.add('hidden');
             editorPage.classList.remove('hidden');
             editorPage.classList.add('flex'); 
+            document.body.classList.add('editor-active');
             window.scrollTo(0, 0);
         }
 
@@ -515,6 +549,7 @@
             editorPage.classList.add('hidden');
             editorPage.classList.remove('flex');
             landingPage.classList.remove('hidden');
+            document.body.classList.remove('editor-active');
             window.scrollTo(0, 0);
         }
 
@@ -733,42 +768,50 @@
             currentRatio = ratio;
             const cContainer = document.getElementById('canvas-container');
             
-            // Reset button styles
+            // Reset Desk buttons
             ['btn-ratio-1', 'btn-ratio-2', 'btn-ratio-3'].forEach(id => {
-                document.getElementById(id).className = "flex-1 bg-gray-50 hover:bg-gray-200 border border-gray-200 text-gray-700 font-bold py-2 rounded-xl text-xs sm:text-sm shadow-sm transition-colors";
+                const btn = document.getElementById(id);
+                if(btn) btn.className = "flex-1 bg-gray-50 hover:bg-gray-200 border border-gray-200 text-gray-700 font-bold py-2 rounded-xl text-xs sm:text-sm shadow-sm transition-colors";
+            });
+            // Reset Mobile buttons
+            ['btn-ratio-1-m', 'btn-ratio-2-m', 'btn-ratio-3-m'].forEach(id => {
+                const btn = document.getElementById(id);
+                if(btn) btn.className = "w-full aspect-square bg-gray-50 hover:bg-gray-200 border border-gray-200 text-gray-700 rounded-xl text-sm shadow-sm transition-colors flex items-center justify-center";
             });
 
-            let activeBtn;
+            let activeBtn, activeBtnM;
             if(ratio === '1:1') { 
                 CANVAS_W = 1080; CANVAS_H = 1080; 
                 cContainer.style.aspectRatio = '1/1'; 
                 cContainer.style.maxWidth = '500px';
-                activeBtn = 'btn-ratio-1'; 
+                activeBtn = 'btn-ratio-1'; activeBtnM = 'btn-ratio-1-m';
             }
             if(ratio === '9:16') { 
                 CANVAS_W = 1080; CANVAS_H = 1920; 
                 cContainer.style.aspectRatio = '9/16'; 
-                // Menahan max-width agar tidak stretch terlalu tinggi sehingga mencegah scroll berlebih
                 cContainer.style.maxWidth = '320px'; 
-                activeBtn = 'btn-ratio-2'; 
+                activeBtn = 'btn-ratio-2'; activeBtnM = 'btn-ratio-2-m';
             }
             if(ratio === '16:9') { 
                 CANVAS_W = 1920; CANVAS_H = 1080; 
                 cContainer.style.aspectRatio = '16/9'; 
                 cContainer.style.maxWidth = '500px';
-                activeBtn = 'btn-ratio-3'; 
+                activeBtn = 'btn-ratio-3'; activeBtnM = 'btn-ratio-3-m';
             }
 
-            document.getElementById(activeBtn).className = "flex-1 bg-indigo-600 text-white font-bold py-2 rounded-xl text-xs sm:text-sm shadow transition-colors";
+            const dBtn = document.getElementById(activeBtn);
+            if(dBtn) dBtn.className = "flex-1 bg-indigo-600 text-white font-bold py-2 rounded-xl text-xs sm:text-sm shadow transition-colors";
+            
+            const mBtn = document.getElementById(activeBtnM);
+            if(mBtn) mBtn.className = "w-full aspect-square bg-indigo-600 text-white rounded-xl text-sm shadow transition-colors flex items-center justify-center";
 
             editorCanvas.width = CANVAS_W;
             editorCanvas.height = CANVAS_H;
             
-            // Re-center images to new canvas size
             if(layers.photo.img) { layers.photo.x = CANVAS_W/2; layers.photo.y = CANVAS_H/2; layers.photo.scale = Math.max(CANVAS_W/layers.photo.img.width, CANVAS_H/layers.photo.img.height); }
             if(layers.frame.img) { layers.frame.x = CANVAS_W/2; layers.frame.y = CANVAS_H/2; layers.frame.scale = Math.max(CANVAS_W/layers.frame.img.width, CANVAS_H/layers.frame.img.height); }
             
-            historyStack = []; // Clear history to prevent jumping to old aspect ratio coordinates
+            historyStack = []; 
             renderEditor();
         }
 
