@@ -202,30 +202,14 @@
     </section>
 
     <!-- ================= HALAMAN EDITOR ================= -->
-    <section id="editor-page" class="hidden w-full max-w-7xl mx-auto lg:h-[calc(100vh-90px)] flex flex-col lg:flex-row gap-6 p-4">
+    <section id="editor-page" class="hidden w-full max-w-7xl mx-auto h-[calc(100dvh-90px)] flex-col lg:flex-row gap-2 lg:gap-6 p-2 lg:p-4">
         
         <!-- AREA KIRI: Kanvas -->
-        <div class="w-full lg:w-3/5 h-full flex flex-col z-10">
-            <div class="flex justify-between items-center w-full mb-4 max-w-[500px] mx-auto gap-1 sm:gap-2">
-                <button onclick="goHome()" class="btn-theme-back flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-1 rounded-xl shadow-sm transition-colors text-[10px] sm:text-xs flex flex-col sm:flex-row items-center justify-center gap-1">
-                    <i class="fa-solid fa-arrow-left"></i> Kembali
-                </button>
-                <button onclick="undo()" class="flex-1 bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-bold py-2 px-1 rounded-xl shadow-sm transition-colors text-[10px] sm:text-xs flex flex-col sm:flex-row items-center justify-center gap-1">
-                    <i class="fa-solid fa-rotate-left"></i> Undo
-                </button>
-                <button onclick="redo()" class="flex-1 bg-blue-400 hover:bg-blue-500 text-blue-900 font-bold py-2 px-1 rounded-xl shadow-sm transition-colors text-[10px] sm:text-xs flex flex-col sm:flex-row items-center justify-center gap-1">
-                    <i class="fa-solid fa-rotate-right"></i> Redo
-                </button>
-                <button onclick="resetLayer()" class="flex-1 bg-orange-400 hover:bg-orange-500 text-orange-900 font-bold py-2 px-1 rounded-xl shadow-sm transition-colors text-[10px] sm:text-xs flex flex-col sm:flex-row items-center justify-center gap-1">
-                    <i class="fa-solid fa-arrows-rotate"></i> Reset
-                </button>
-                <button onclick="buatBaru()" class="flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-1 rounded-xl shadow-sm transition-colors text-[10px] sm:text-xs flex flex-col sm:flex-row items-center justify-center gap-1">
-                    <i class="fa-solid fa-trash-can"></i> Buat Baru
-                </button>
-            </div>
+        <div class="w-full lg:w-3/5 h-[60%] lg:h-full flex flex-col z-20 flex-shrink-0">
+            
 
             <!-- Wadah Kanvas & Rasio -->
-            <div class="flex-grow bg-white p-4 rounded-3xl shadow-xl border border-gray-100 flex flex-col justify-center items-center">
+            <div class="flex-grow bg-white p-3 lg:p-4 rounded-3xl shadow-xl border border-gray-100 flex flex-col justify-center items-center overflow-hidden">
                 
                 <!-- Pilihan Rasio Gambar -->
                 <div class="w-full max-w-[500px] flex gap-2 mb-4">
@@ -235,13 +219,31 @@
                 </div>
 
                 <!-- Wadah kanvas dinamis (max width disesuaikan agar tinggi 9:16 tidak bocor) -->
-                <div id="canvas-container" class="w-full max-w-[500px] bg-gray-100 border-2 border-dashed border-gray-300 rounded-2xl flex items-center justify-center relative overflow-hidden mb-6 mx-auto transition-all duration-300" style="aspect-ratio: 1/1;">
+                <div id="canvas-container" class="w-full max-w-[500px] bg-gray-100 border-2 border-dashed border-gray-300 rounded-2xl flex items-center justify-center relative overflow-hidden mb-3 mx-auto transition-all duration-300 min-h-[150px] max-h-[40vh] lg:max-h-[60vh]" style="aspect-ratio: 1/1;">
                     <p id="canvas-placeholder" class="text-gray-400 text-center px-4 font-medium select-none absolute z-0 pointer-events-none">
                         <i class="fa-regular fa-image text-5xl mb-3"></i><br>Area Kanvas<br>
                         <span class="text-sm font-normal">Hasil gabungan akan muncul di sini</span>
                     </p>
                     <canvas id="editor-canvas" class="w-full h-full object-contain relative z-10 cursor-grab active:cursor-grabbing" width="1080" height="1080"></canvas>
                 </div>
+
+                <div class="flex justify-between items-center w-full mt-2 mb-4 max-w-[500px] mx-auto gap-1 sm:gap-2">
+                <button onclick="goHome()" class="btn-theme-back flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-1 rounded-xl shadow-sm transition-colors text-xs sm:text-sm font-bold flex flex-col sm:flex-row items-center justify-center gap-1">
+                    <i class="fa-solid fa-arrow-left"></i> Kembali
+                </button>
+                <button onclick="undo()" class="flex-1 bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-bold py-2 px-1 rounded-xl shadow-sm transition-colors text-xs sm:text-sm font-bold flex flex-col sm:flex-row items-center justify-center gap-1">
+                    <i class="fa-solid fa-rotate-left"></i> Undo
+                </button>
+                <button onclick="redo()" class="flex-1 bg-blue-400 hover:bg-blue-500 text-blue-900 font-bold py-2 px-1 rounded-xl shadow-sm transition-colors text-xs sm:text-sm font-bold flex flex-col sm:flex-row items-center justify-center gap-1">
+                    <i class="fa-solid fa-rotate-right"></i> Redo
+                </button>
+                <button onclick="resetLayer()" class="flex-1 bg-orange-400 hover:bg-orange-500 text-orange-900 font-bold py-2 px-1 rounded-xl shadow-sm transition-colors text-xs sm:text-sm font-bold flex flex-col sm:flex-row items-center justify-center gap-1">
+                    <i class="fa-solid fa-arrows-rotate"></i> Reset
+                </button>
+                <button onclick="buatBaru()" class="flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-1 rounded-xl shadow-sm transition-colors text-xs sm:text-sm font-bold flex flex-col sm:flex-row items-center justify-center gap-1">
+                    <i class="fa-solid fa-trash-can"></i> Baru
+                </button>
+            </div>
 
                 <!-- Kontrol Ekspor (SD, HD, Full HD) -->
                 <div class="w-full max-w-[500px] flex flex-col sm:flex-row gap-3 justify-center">
@@ -259,7 +261,7 @@
         </div>
 
         <!-- AREA KANAN: Panel Tool -->
-        <div class="w-full lg:w-2/5 h-full lg:overflow-y-auto custom-scroll pb-6 pr-2 space-y-5 z-10">
+        <div class="w-full lg:w-2/5 flex-1 overflow-y-auto custom-scroll pb-6 pr-2 space-y-5 z-10 bg-white lg:bg-transparent rounded-3xl p-3 lg:p-0 shadow-lg lg:shadow-none border border-gray-100 lg:border-none">
             
             <!-- PANEL 1: BINGKAI -->
             <div class="bg-white p-5 rounded-3xl shadow-lg border border-gray-100">
@@ -958,41 +960,95 @@
             img.src = URL.createObjectURL(file);
         });
 
-        // --- Dragging System (Mouse & Touch) ---
+        // --- Dragging System & Multi-touch (Mouse & Touch) ---
         let isDragging = false;
         let startX, startY;
         let dragStartState = null;
+        
+        // Multi-touch variables
+        let initialDistance = null;
+        let initialAngle = null;
+        let initialScale = null;
+        let initialRot = null;
+        let isMultiTouch = false;
 
         function getMousePos(e) {
             const rect = editorCanvas.getBoundingClientRect();
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            const clientX = e.touches && e.touches.length > 0 ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches && e.touches.length > 0 ? e.touches[0].clientY : e.clientY;
             return {
                 x: (clientX - rect.left) * (CANVAS_W / rect.width),
                 y: (clientY - rect.top) * (CANVAS_H / rect.height)
             };
         }
+        
+        function selectLayerByClick(p) {
+            if(!layers.frame.img || isFrameHidden) { setLayer('photo'); return; }
+            
+            // Render frame ke memori sbg deteksi lubang transparan
+            const tempC = document.createElement('canvas');
+            tempC.width = CANVAS_W; tempC.height = CANVAS_H;
+            const tCtx = tempC.getContext('2d');
+            
+            tCtx.save();
+            let f = layers.frame;
+            tCtx.translate(f.x, f.y);
+            tCtx.rotate(f.rot * Math.PI / 180);
+            tCtx.scale(f.flipH, f.flipV);
+            let baseW = f.img.width * f.scale;
+            let baseH = f.img.height * f.scale;
+            tCtx.drawImage(f.img, -baseW/2, -baseH/2, baseW, baseH);
+            tCtx.restore();
+            
+            const pixel = tCtx.getImageData(p.x, p.y, 1, 1).data;
+            if(pixel[3] < 20) { 
+                setLayer('photo'); // Area transparan -> Pilih Foto
+            } else {
+                setLayer('frame'); // Area solid -> Pilih Bingkai
+            }
+        }
 
         const startDrag = (e) => {
             if(isPickingColor) { processColorRemoval(e); return; }
-            if(!layers[activeLayer].img || (activeLayer === 'frame' && isFrameHidden)) return;
             
-            dragStartState = { photo: {...layers.photo}, frame: {...layers.frame} };
-            isDragging = true;
-            const p = getMousePos(e); startX = p.x; startY = p.y;
+            const p = getMousePos(e);
+            
+            if (e.touches && e.touches.length === 2) {
+                isMultiTouch = true;
+                initialDistance = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+                initialAngle = Math.atan2(e.touches[1].clientY - e.touches[0].clientY, e.touches[1].clientX - e.touches[0].clientX);
+                initialScale = layers[activeLayer].scale;
+                initialRot = layers[activeLayer].rot;
+            } else {
+                isMultiTouch = false;
+                
+                // Fitur sentuh layar untuk memilih layer
+                if(e.type === 'touchstart' || e.type === 'mousedown') {
+                    selectLayerByClick(p);
+                }
+                
+                if(!layers[activeLayer].img || (activeLayer === 'frame' && isFrameHidden)) return;
+                
+                dragStartState = { photo: {...layers.photo}, frame: {...layers.frame} };
+                isDragging = true;
+                startX = p.x; startY = p.y;
+            }
         };
         
         editorCanvas.addEventListener('mousedown', startDrag);
         editorCanvas.addEventListener('touchstart', startDrag, {passive: false});
 
-        const endDrag = () => {
-            if(isDragging && dragStartState) {
-                if(layers[activeLayer].x !== dragStartState[activeLayer].x || layers[activeLayer].y !== dragStartState[activeLayer].y) {
-                    historyStack.push(dragStartState);
-                    if(historyStack.length > 20) historyStack.shift();
+        const endDrag = (e) => {
+            if(isDragging || isMultiTouch) {
+                if(dragStartState) {
+                    if(layers[activeLayer].x !== dragStartState[activeLayer].x || layers[activeLayer].y !== dragStartState[activeLayer].y || layers[activeLayer].scale !== dragStartState[activeLayer].scale || layers[activeLayer].rot !== dragStartState[activeLayer].rot) {
+                        historyStack.push(dragStartState);
+                        if(historyStack.length > 20) historyStack.shift();
+                    }
                 }
             }
             isDragging = false;
+            if(!e.touches || e.touches.length < 2) isMultiTouch = false;
         };
 
         window.addEventListener('mouseup', endDrag);
@@ -1000,7 +1056,26 @@
 
         const moveDrag = (e) => {
             if(isPickingColor && e.touches) e.preventDefault();
-            if(!isDragging || !layers[activeLayer].img) return;
+            if(!layers[activeLayer].img) return;
+            
+            // Multitouch (Zoom & Putar dengan dua jari)
+            if (e.touches && e.touches.length === 2 && isMultiTouch) {
+                e.preventDefault();
+                const currentDistance = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+                const currentAngle = Math.atan2(e.touches[1].clientY - e.touches[0].clientY, e.touches[1].clientX - e.touches[0].clientX);
+                
+                if (initialDistance) {
+                    layers[activeLayer].scale = initialScale * (currentDistance / initialDistance);
+                }
+                if (initialAngle) {
+                    let angleDiff = (currentAngle - initialAngle) * (180 / Math.PI);
+                    layers[activeLayer].rot = initialRot + angleDiff;
+                }
+                renderEditor();
+                return;
+            }
+
+            if(!isDragging) return;
             if(e.touches) e.preventDefault();
             
             const p = getMousePos(e);
