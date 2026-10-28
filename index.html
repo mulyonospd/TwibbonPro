@@ -117,6 +117,8 @@
         }
         </style>
 
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="flex flex-col min-h-screen" data-theme="light">
 
@@ -583,14 +585,69 @@
             changeTheme('light');
         }
 
-        // 3. STATISTIK TRAFIK SIMULASI
-        function loadTrafficStats() {
-            const mockData = { today: 412, month: 8590, year: 124500 };
-            document.getElementById('stat-today').innerText = mockData.today.toLocaleString('id-ID');
-            document.getElementById('stat-month').innerText = mockData.month.toLocaleString('id-ID');
-            document.getElementById('stat-year').innerText = mockData.year.toLocaleString('id-ID');
+        // 3. STATISTIK TRAFIK REAL-TIME DENGAN SUPABASE
+        // --- MASUKKAN KREDENSIAL SUPABASE ANDA DI SINI ---
+        const SUPABASE_URL = 'https://ydsoloxtdvcgmgskteql.supabase.co/rest/v1/';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlkc29sb3h0ZHZjZ21nc2t0ZXFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMxOTExMDUsImV4cCI6MjEwODc2NzEwNX0.b6w6Wc4eUrJjAYl59pqkOntl-WpFhYAekfcPUrMLNdE';
+        
+        let supabaseClient;
+        try {
+            // Kita inisialisasi menggunakan objek supabase dari CDN
+            supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        } catch (e) {
+            console.error("Gagal inisialisasi Supabase. Pastikan URL dan Key benar.", e);
         }
-        loadTrafficStats();
+
+        async function logVisitAndLoadStats() {
+            if (!supabaseClient) return; // Keluar jika belum dikonfigurasi
+            
+            // Jika Anda belum mengganti credential di atas, kita hentikan proses agar tidak error
+            if(SUPABASE_URL === 'MASUKKAN_URL_SUPABASE_ANDA_DISINI') {
+                document.getElementById('stat-today').innerText = "412"; // Dummy data penanda belum siap
+                document.getElementById('stat-month').innerText = "8.590";
+                document.getElementById('stat-year').innerText = "124.500";
+                return;
+            }
+
+            try {
+                // 1. Catat Kunjungan Baru (Insert)
+                // Mengirim baris kosong, Supabase akan otomatis mengisi kolom 'id' dan 'created_at'
+                await supabaseClient.from('page_views').insert([{}]);
+
+                // 2. Siapkan Filter Waktu Berdasarkan Zona Waktu Pengguna
+                const now = new Date();
+                
+                // Mulai Hari Ini (00:00:00)
+                const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate()).toISOString();
+                
+                // Mulai Bulan Ini (Tanggal 1, 00:00:00)
+                const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
+                
+                // Mulai Tahun Ini (1 Januari, 00:00:00)
+                const startOfYear = new Date(now.getFullYear(), 0, 1).toISOString();
+
+                // 3. Tarik Data Statistik (Count) secara paralel
+                const [todayReq, monthReq, yearReq] = await Promise.all([
+                    supabaseClient.from('page_views').select('*', { count: 'exact', head: true }).gte('created_at', startOfDay),
+                    supabaseClient.from('page_views').select('*', { count: 'exact', head: true }).gte('created_at', startOfMonth),
+                    supabaseClient.from('page_views').select('*', { count: 'exact', head: true }).gte('created_at', startOfYear)
+                ]);
+
+                // 4. Update Tampilan HTML
+                document.getElementById('stat-today').innerText = (todayReq.count || 0).toLocaleString('id-ID');
+                document.getElementById('stat-month').innerText = (monthReq.count || 0).toLocaleString('id-ID');
+                document.getElementById('stat-year').innerText = (yearReq.count || 0).toLocaleString('id-ID');
+                
+            } catch (err) {
+                console.error("Gagal memuat trafik:", err);
+                document.getElementById('stat-today').innerText = "---";
+                document.getElementById('stat-month').innerText = "---";
+                document.getElementById('stat-year').innerText = "---";
+            }
+        }
+        
+        // Panggil fungsi segera setelah script dijalankan
+        logVisitAndLoadStats();
 
         // 4. ANIMASI HUJAN (CANVAS SUPER RINGAN)
         const rainCanvas = document.getElementById('rainCanvas');
