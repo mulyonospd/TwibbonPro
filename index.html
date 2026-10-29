@@ -32,46 +32,51 @@
         /* Kanvas CSS */
         #editor-canvas {
             touch-action: none;
-            background-color: #ffffff; /* Ubah ke putih solid */
+            background-color: #ffffff;
         }
         .cursor-crosshair { cursor: crosshair !important; }
 
         /* ================= TEMA (THEMES) CSS OVERRIDES ================= */
-        /* Warna rintik hujan diperjelas di semua tema */
         :root { --rain-color: rgba(0, 0, 0, 0.5); } 
 
-        /* DEFAULT (Light) - Gradasi biru-ungu terang */
+        /* DEFAULT (Light) - Gradasi biru-ungu dipertegas */
         body, body[data-theme="light"] {
-            background: linear-gradient(135deg, #a5b4fc 0%, #c4b5fd 50%, #fbcfe8 100%);
+            background: linear-gradient(135deg, #818cf8 0%, #a78bfa 50%, #f472b6 100%);
         }
         
-        /* 1. TEMA REDUP (Dim) - Gradasi abu-abu kebiruan */
+        /* Perjelas border di tema terang */
+        body[data-theme="light"] .border-gray-100 {
+            border-color: #a5b4fc !important;
+            border-width: 2px !important;
+        }
+        
+        /* 1. TEMA REDUP (Dim) */
         body[data-theme="dim"] {
             background: linear-gradient(135deg, #64748b 0%, #475569 50%, #334155 100%);
             --rain-color: rgba(255, 255, 255, 0.5);
         }
         body[data-theme="dim"] .bg-white, body[data-theme="dim"] .bg-white\/90, body[data-theme="dim"] .bg-white\/80 {
-            background-color: rgba(30, 41, 59, 0.9) !important; border-color: #475569 !important; color: #f8fafc !important;
+            background-color: rgba(30, 41, 59, 0.9) !important; border-color: #475569 !important; border-width: 1px !important; color: #f8fafc !important;
         }
         body[data-theme="dim"] header { background-color: rgba(30, 41, 59, 0.7) !important; border-bottom: 1px solid #475569; }
         body[data-theme="dim"] .text-gray-900, body[data-theme="dim"] .text-gray-800, body[data-theme="dim"] .text-gray-700 { color: #f1f5f9 !important; }
         body[data-theme="dim"] .bg-gray-50, body[data-theme="dim"] .bg-gray-100 { background-color: #334155 !important; color: #f1f5f9 !important; border-color: #475569 !important; }
         body[data-theme="dim"] .text-indigo-700 { color: #818cf8 !important; }
 
-        /* 2. TEMA GELAP (Dark) - Gradasi ungu gelap ke hitam */
+        /* 2. TEMA GELAP (Dark) */
         body[data-theme="dark"] {
             background: linear-gradient(135deg, #312e81 0%, #1e1b4b 50%, #000000 100%);
             --rain-color: rgba(255, 255, 255, 0.7);
         }
         body[data-theme="dark"] .bg-white, body[data-theme="dark"] .bg-white\/90, body[data-theme="dark"] .bg-white\/80 {
-            background-color: rgba(15, 23, 42, 0.95) !important; border-color: #334155 !important; color: #fff !important;
+            background-color: rgba(15, 23, 42, 0.95) !important; border-color: #334155 !important; border-width: 1px !important; color: #fff !important;
         }
         body[data-theme="dark"] header { background-color: rgba(15, 23, 42, 0.8) !important; border-bottom: 1px solid #334155; }
         body[data-theme="dark"] .text-gray-900, body[data-theme="dark"] .text-gray-800, body[data-theme="dark"] .text-gray-700 { color: #f8fafc !important; }
         body[data-theme="dark"] .bg-gray-50, body[data-theme="dark"] .bg-gray-100 { background-color: #1e293b !important; color: #cbd5e1 !important; border-color: #475569 !important; }
         body[data-theme="dark"] .text-indigo-700 { color: #a5b4fc !important; }
 
-        /* 3. TEMA KONTRAS (High Contrast) - Hijau Neon & Hitam */
+        /* 3. TEMA KONTRAS (High Contrast) */
         body[data-theme="contrast"] {
             background: linear-gradient(135deg, #022c22 0%, #000000 50%, #064e3b 100%);
             --rain-color: rgba(0, 255, 0, 0.8);
@@ -84,13 +89,13 @@
         body[data-theme="contrast"] .bg-gray-50, body[data-theme="contrast"] .bg-gray-100 { background-color: #000 !important; color: #4ade80 !important; border: 1px solid #22c55e !important; }
         body[data-theme="contrast"] button, body[data-theme="contrast"] .text-indigo-600, body[data-theme="contrast"] .text-indigo-700 { color: #22c55e !important; border-color: #22c55e !important; }
 
-        /* 4. TEMA LEMBUT (Soft / Pastel) - Gradasi persik hangat */
+        /* 4. TEMA LEMBUT (Soft / Pastel) */
         body[data-theme="soft"] {
             background: linear-gradient(135deg, #fef08a 0%, #fed7aa 50%, #fbcfe8 100%);
             --rain-color: rgba(92, 75, 55, 0.4);
         }
         body[data-theme="soft"] .bg-white, body[data-theme="soft"] .bg-white\/90, body[data-theme="soft"] .bg-white\/80 { 
-            background-color: rgba(255, 253, 250, 0.95) !important; border-color: #fed7aa !important;
+            background-color: rgba(255, 253, 250, 0.95) !important; border-color: #fed7aa !important; border-width: 1px !important;
         }
         body[data-theme="soft"] header { background-color: rgba(255, 253, 250, 0.8) !important; border-bottom: 1px solid #fed7aa; }
         body[data-theme="soft"] .text-gray-900, body[data-theme="soft"] .text-gray-800 { color: #78350f !important; }
@@ -136,16 +141,9 @@
     <!-- CANVAS ANIMASI HUJAN -->
     <canvas id="rainCanvas" class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none"></canvas>
 
-    <!-- FLOATING SAWER BUTTON (Kanan Bawah) -->
-    <div class="fixed bottom-20 lg:bottom-4 right-4 z-[90]">
-        <button onclick="toggleModal('sawer-modal')" class="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-bold w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-transform hover:scale-110 animate-bounce border-2 border-white" title="Traktir Kopi">
-            <i class="fa-solid fa-mug-hot text-2xl"></i>
-        </button>
-    </div>
-
     <!-- FLOATING THEME SWITCHER -->
     <div class="fixed bottom-4 left-4 z-50 bg-white/90 backdrop-blur-md shadow-xl border border-gray-200 p-2 rounded-2xl flex flex-col gap-2 transition-all group">
-        <div class="text-xs font-bold text-center text-gray-500 mb-1 hidden group-hover:block">Pilih Tema</div>
+        <div class="text-xs font-bold text-center text-gray-500 mb-1 hidden group-hover:block" data-i18n="title_theme">Pilih Tema</div>
         <div class="flex gap-2">
             <button onclick="changeTheme('light')" class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 shadow flex items-center justify-center transition-all" title="Terang">☀️</button>
             <button onclick="changeTheme('dim')" class="w-10 h-10 rounded-full bg-gray-500 text-white hover:bg-gray-600 shadow flex items-center justify-center transition-all hidden group-hover:flex" title="Redup">⛅</button>
@@ -155,14 +153,26 @@
         </div>
     </div>
 
-    <!-- NAVBAR DIPERBESAR -->
+    <!-- NAVBAR -->
     <header class="bg-white/90 backdrop-blur-md shadow-sm z-40 h-[90px] flex items-center sticky top-0">
         <div class="w-full max-w-7xl mx-auto px-4 flex justify-between items-center">
-            <!-- Nama Aplikasi Diperbesar -->
+            <!-- Nama Aplikasi -->
             <h1 class="text-3xl md:text-4xl font-extrabold text-indigo-700 tracking-tight cursor-pointer" onclick="goHome()">
                 <i class="fa-solid fa-crop-simple mr-2"></i>TwibbonPro
             </h1>
-            <!-- Tombol Traktir Kopi dipindah ke float -->
+            
+            <!-- Alat Kanan Navbar (Bhs & Kopi) -->
+            <div class="flex items-center gap-3 lg:gap-4">
+                <!-- Language Switch -->
+                <div class="flex bg-indigo-50 rounded-full p-1 border border-indigo-100 shadow-inner">
+                    <button id="btn-lang-id" onclick="setLanguage('id')" class="bg-indigo-600 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-sm transition-colors">ID</button>
+                    <button id="btn-lang-en" onclick="setLanguage('en')" class="text-indigo-400 hover:text-indigo-700 px-3 py-1.5 rounded-full text-xs font-bold transition-colors">EN</button>
+                </div>
+                <!-- Laptop Coffee Button -->
+                <button onclick="toggleModal('sawer-modal')" class="hidden lg:flex bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-bold py-2 px-5 rounded-full shadow-lg items-center transition-transform hover:scale-105 border-2 border-white" title="Traktir Kopi" data-i18n="btn_coffee">
+                    <i class="fa-solid fa-mug-hot mr-2"></i> Traktir Kopi
+                </button>
+            </div>
         </div>
     </header>
 
@@ -170,45 +180,43 @@
     <section id="landing-page" class="flex-grow flex flex-col justify-center py-10 px-4">
         <div class="max-w-6xl mx-auto w-full text-center">
             <div class="mb-12">
-                <span class="inline-block py-1 px-3 rounded-full bg-indigo-100 text-indigo-700 text-sm font-bold mb-4 tracking-wide">100% GRATIS SELAMANYA</span>
-                <h2 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight text-gray-900">
+                <span class="inline-block py-1 px-3 rounded-full bg-indigo-100 text-indigo-700 text-sm font-bold mb-4 tracking-wide" data-i18n="badge_free">100% GRATIS SELAMANYA</span>
+                <h2 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight text-gray-900" data-i18n="hero_title">
                     Desain Twibbon Kelas Pro,<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">Langsung dari Browser</span>
                 </h2>
-                <p class="text-lg md:text-xl text-gray-700 mb-8 max-w-2xl mx-auto font-medium">
+                <p class="text-lg md:text-xl text-gray-700 mb-8 max-w-2xl mx-auto font-medium" data-i18n="hero_desc">
                     Tidak perlu daftar, tidak perlu install aplikasi. Hasil beresolusi tinggi, tanpa embel-embel watermark.
                 </p>
-                <button onclick="openEditor()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-10 md:px-16 rounded-full shadow-xl text-lg md:text-xl transition-all transform hover:scale-105 hover:shadow-indigo-500/50">
+                <button onclick="openEditor()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-10 md:px-16 rounded-full shadow-xl text-lg md:text-xl transition-all transform hover:scale-105 hover:shadow-indigo-500/50" data-i18n="btn_start">
                     Mulai Buat Sekarang <i class="fa-solid fa-arrow-right ml-2"></i>
                 </button>
             </div>
 
             <!-- 3 Langkah Mudah -->
-            <h3 class="text-2xl font-bold text-gray-800 mb-6">Cara Kerja Semudah 1-2-3</h3>
+            <h3 class="text-2xl font-bold text-gray-800 mb-6" data-i18n="step_title">Cara Kerja Semudah 1-2-3</h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-10">
                 <div class="bg-white/80 backdrop-blur rounded-2xl p-6 shadow-lg border border-white">
                     <div class="w-14 h-14 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-4 font-bold shadow-inner">1</div>
-                    <h4 class="font-bold text-lg mb-2">Pilih Bingkai</h4>
-                    <p class="text-gray-600 text-sm">Upload desain Anda sendiri atau cari dari ribuan koleksi tema yang kami sediakan.</p>
+                    <h4 class="font-bold text-lg mb-2" data-i18n="step1_title">Pilih Bingkai</h4>
+                    <p class="text-gray-600 text-sm" data-i18n="step1_desc">Upload desain Anda sendiri atau cari dari ribuan koleksi tema yang kami sediakan.</p>
                 </div>
                 <div class="bg-white/80 backdrop-blur rounded-2xl p-6 shadow-lg border border-white">
                     <div class="w-14 h-14 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-4 font-bold shadow-inner">2</div>
-                    <h4 class="font-bold text-lg mb-2">Masukkan Foto</h4>
-                    <p class="text-gray-600 text-sm">Upload foto atau jepret langsung dari kamera. Geser dan sesuaikan posisinya.</p>
+                    <h4 class="font-bold text-lg mb-2" data-i18n="step2_title">Masukkan Foto</h4>
+                    <p class="text-gray-600 text-sm" data-i18n="step2_desc">Upload foto atau jepret langsung dari kamera. Geser dan sesuaikan posisinya.</p>
                 </div>
                 <div class="bg-white/80 backdrop-blur rounded-2xl p-6 shadow-lg border border-white">
                     <div class="w-14 h-14 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-4 font-bold shadow-inner">3</div>
-                    <h4 class="font-bold text-lg mb-2">Unduh Hasilnya</h4>
-                    <p class="text-gray-600 text-sm">Satu klik untuk mengunduh gambar resolusi tinggi (HD) tanpa batas.</p>
+                    <h4 class="font-bold text-lg mb-2" data-i18n="step3_title">Unduh Hasilnya</h4>
+                    <p class="text-gray-600 text-sm" data-i18n="step3_desc">Satu klik untuk mengunduh gambar resolusi tinggi (HD) tanpa batas.</p>
                 </div>
             </div>
-
-            
 
             <!-- Info Privasi -->
             <div class="bg-gray-900 text-white rounded-3xl p-8 max-w-4xl mx-auto shadow-2xl flex flex-col md:flex-row items-center justify-between text-left gap-6">
                 <div>
-                    <h4 class="text-xl font-bold mb-2 flex items-center"><i class="fa-solid fa-shield-halved text-green-400 mr-3 text-2xl"></i> Privasi Anda Terjamin 100%</h4>
-                    <p class="text-gray-400 text-sm">Semua proses pemotongan dan editing dilakukan langsung di memori perangkat Anda (HP/Laptop). Kami <strong>TIDAK PERNAH</strong> mengunggah foto pribadi Anda ke server kami.</p>
+                    <h4 class="text-xl font-bold mb-2 flex items-center" data-i18n="p_title"><i class="fa-solid fa-shield-halved text-green-400 mr-3 text-2xl"></i> Privasi Anda Terjamin 100%</h4>
+                    <p class="text-gray-400 text-sm" data-i18n="p_desc">Semua proses pemotongan dan editing dilakukan langsung di memori perangkat Anda (HP/Laptop). Kami <strong>TIDAK PERNAH</strong> mengunggah foto pribadi Anda ke server kami.</p>
                 </div>
             </div>
         </div>
@@ -221,69 +229,57 @@
         <div class="canvas-area w-full lg:w-3/5 h-[58%] sm:h-[60%] lg:h-full flex flex-col z-20 flex-shrink-0">
             <div class="flex-grow bg-white p-2 lg:p-4 rounded-2xl lg:rounded-3xl shadow-xl border border-gray-100 flex flex-col justify-center items-center overflow-hidden relative">
                 
-                <div class="flex flex-row w-full h-full items-center justify-center gap-1.5 sm:gap-3">
+                <div class="flex flex-col w-full h-full items-center justify-center gap-1 sm:gap-2">
                     
-                    <!-- MOBILE SIDEBAR (Kiri) -->
-                    <div class="flex lg:hidden flex-col gap-2 shrink-0 w-[45px] h-full justify-center py-1">
-                        <button onclick="goHome()" class="btn-theme-back w-full aspect-square bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-xl flex items-center justify-center shadow-sm text-base" title="Kembali"><i class="fa-solid fa-arrow-left"></i></button>
-                        <button onclick="undo()" class="w-full aspect-square bg-yellow-400 hover:bg-yellow-500 text-yellow-900 rounded-xl flex items-center justify-center shadow-sm text-base" title="Undo"><i class="fa-solid fa-rotate-left"></i></button>
-                        <button onclick="redo()" class="w-full aspect-square bg-blue-400 hover:bg-blue-500 text-blue-900 rounded-xl flex items-center justify-center shadow-sm text-base" title="Redo"><i class="fa-solid fa-rotate-right"></i></button>
-                        <button onclick="resetLayer()" class="w-full aspect-square bg-orange-400 hover:bg-orange-500 text-orange-900 rounded-xl flex items-center justify-center shadow-sm text-base" title="Reset"><i class="fa-solid fa-arrows-rotate"></i></button>
-                        <button onclick="buatBaru()" class="w-full aspect-square bg-red-500 hover:bg-red-600 text-white rounded-xl flex items-center justify-center shadow-sm text-base" title="Baru"><i class="fa-solid fa-trash-can"></i></button>
-                    </div>
-
                     <!-- CANVAS CONTENT -->
                     <div class="flex flex-col w-full h-full items-center justify-center max-w-[500px] overflow-hidden">
                         
                         <!-- Desktop Ratio -->
-                        <div class="hidden lg:flex w-full gap-2 mb-4">
+                        <div class="hidden lg:flex w-full gap-2 mb-3">
                             <button onclick="changeRatio('1:1')" id="btn-ratio-1" class="flex-1 bg-indigo-600 text-white font-bold py-2 rounded-xl text-xs sm:text-sm shadow transition-colors">1:1 (IG Feed)</button>
                             <button onclick="changeRatio('9:16')" id="btn-ratio-2" class="flex-1 bg-gray-50 hover:bg-gray-200 border border-gray-200 text-gray-700 font-bold py-2 rounded-xl text-xs sm:text-sm shadow-sm transition-colors">9:16 (Status WA)</button>
                             <button onclick="changeRatio('16:9')" id="btn-ratio-3" class="flex-1 bg-gray-50 hover:bg-gray-200 border border-gray-200 text-gray-700 font-bold py-2 rounded-xl text-xs sm:text-sm shadow-sm transition-colors">16:9 (FB/X)</button>
                         </div>
 
                         <!-- Canvas Wrapper -->
-                        <div id="canvas-container" class="w-full bg-gray-100 border-2 border-dashed border-gray-300 rounded-xl lg:rounded-2xl flex items-center justify-center relative overflow-hidden mx-auto transition-all duration-300 max-h-[60vh] lg:max-h-[65vh]" style="aspect-ratio: 1/1; max-width: 500px;">
-                            <p id="canvas-placeholder" class="text-gray-400 text-center px-2 font-medium select-none absolute z-0 pointer-events-none text-xs sm:text-sm">
+                        <div id="canvas-container" class="w-full bg-gray-100 border-2 border-dashed border-gray-300 rounded-xl lg:rounded-2xl flex items-center justify-center relative overflow-hidden mx-auto transition-all duration-300 max-h-[70vh] lg:max-h-[75vh]" style="aspect-ratio: 1/1; max-width: 500px; touch-action: none;">
+                            <p id="canvas-placeholder" class="text-gray-400 text-center px-2 font-medium select-none absolute z-0 pointer-events-none text-xs sm:text-sm" data-i18n="canvas_area">
                                 <i class="fa-regular fa-image text-4xl mb-2"></i><br>Area Kanvas
                             </p>
                             <canvas id="editor-canvas" class="w-full h-full object-contain relative z-10 cursor-grab active:cursor-grabbing" width="1080" height="1080"></canvas>
                         </div>
 
                         <!-- Desktop Actions -->
-                        <div class="hidden lg:flex justify-between items-center w-full mt-4 gap-2">
-                            <button onclick="goHome()" class="btn-theme-back flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-1 rounded-xl shadow-sm transition-colors text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1">
+                        <div class="hidden lg:flex justify-between items-center w-full mt-3 gap-2">
+                            <button onclick="goHome()" class="btn-theme-back flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-1 rounded-xl shadow-sm transition-colors text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1" data-i18n="act_back">
                                 <i class="fa-solid fa-arrow-left"></i> Kembali
                             </button>
-                            <button onclick="undo()" class="flex-1 bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-bold py-2 px-1 rounded-xl shadow-sm transition-colors text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1">
+                            <button onclick="undo()" class="flex-1 bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-bold py-2 px-1 rounded-xl shadow-sm transition-colors text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1" data-i18n="act_undo">
                                 <i class="fa-solid fa-rotate-left"></i> Undo
                             </button>
-                            <button onclick="redo()" class="flex-1 bg-blue-400 hover:bg-blue-500 text-blue-900 font-bold py-2 px-1 rounded-xl shadow-sm transition-colors text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1">
+                            <button onclick="redo()" class="flex-1 bg-blue-400 hover:bg-blue-500 text-blue-900 font-bold py-2 px-1 rounded-xl shadow-sm transition-colors text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1" data-i18n="act_redo">
                                 <i class="fa-solid fa-rotate-right"></i> Redo
                             </button>
-                            <button onclick="resetLayer()" class="flex-1 bg-orange-400 hover:bg-orange-500 text-orange-900 font-bold py-2 px-1 rounded-xl shadow-sm transition-colors text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1">
+                            <button onclick="resetLayer()" class="flex-1 bg-orange-400 hover:bg-orange-500 text-orange-900 font-bold py-2 px-1 rounded-xl shadow-sm transition-colors text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1" data-i18n="act_reset">
                                 <i class="fa-solid fa-arrows-rotate"></i> Reset
                             </button>
-                            <button onclick="buatBaru()" class="flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-1 rounded-xl shadow-sm transition-colors text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1">
+                            <button onclick="buatBaru()" class="flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-1 rounded-xl shadow-sm transition-colors text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1" data-i18n="act_new">
                                 <i class="fa-solid fa-trash-can"></i> Baru
                             </button>
                         </div>
+
+                        <!-- Mobile Actions (Bawah) -->
+                        <div class="flex lg:hidden flex-row gap-2 shrink-0 w-full justify-center py-2 mt-2">
+                            <button onclick="goHome()" class="btn-theme-back flex-1 aspect-square max-h-[45px] bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-xl flex items-center justify-center shadow-sm text-base" title="Kembali"><i class="fa-solid fa-arrow-left"></i></button>
+                            <button onclick="undo()" class="flex-1 aspect-square max-h-[45px] bg-yellow-400 hover:bg-yellow-500 text-yellow-900 rounded-xl flex items-center justify-center shadow-sm text-base" title="Undo"><i class="fa-solid fa-rotate-left"></i></button>
+                            <button onclick="redo()" class="flex-1 aspect-square max-h-[45px] bg-blue-400 hover:bg-blue-500 text-blue-900 rounded-xl flex items-center justify-center shadow-sm text-base" title="Redo"><i class="fa-solid fa-rotate-right"></i></button>
+                            <button onclick="resetLayer()" class="flex-1 aspect-square max-h-[45px] bg-orange-400 hover:bg-orange-500 text-orange-900 rounded-xl flex items-center justify-center shadow-sm text-base" title="Reset"><i class="fa-solid fa-arrows-rotate"></i></button>
+                            <button onclick="buatBaru()" class="flex-1 aspect-square max-h-[45px] bg-red-500 hover:bg-red-600 text-white rounded-xl flex items-center justify-center shadow-sm text-base" title="Baru"><i class="fa-solid fa-trash-can"></i></button>
+                            <button onclick="toggleModal('sawer-modal')" class="flex-1 aspect-square max-h-[45px] bg-yellow-400 hover:bg-yellow-500 text-yellow-900 rounded-xl flex items-center justify-center shadow-sm text-base" title="Traktir Kopi"><i class="fa-solid fa-mug-hot"></i></button>
+                        </div>
+
                     </div>
                 </div>
-
-                <!-- Kontrol Ekspor 1 baris -->
-                <div class="w-full max-w-[500px] flex flex-row gap-2 mt-3 lg:mt-4 justify-center shrink-0">
-                    <select id="export-quality" class="bg-gray-50 border border-gray-300 text-gray-900 py-2 px-2 text-xs sm:text-sm lg:text-base lg:py-3 lg:px-4 rounded-xl font-bold outline-none flex-grow focus:border-indigo-500 transition-all cursor-pointer">
-                        <option value="480">Mini (VGA)</option>
-                        <option value="720">Standar (SD)</option>
-                        <option value="1080" selected>Tinggi (HD)</option>
-                        <option value="1440">Super (FHD+)</option>
-                    </select>
-                    <button onclick="downloadTwibbon()" class="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white py-2 px-4 lg:py-3 lg:px-6 rounded-xl font-bold text-sm lg:text-lg shadow-lg hover:shadow-xl transition-all whitespace-nowrap flex items-center justify-center">
-                        <i class="fa-solid fa-download mr-1.5 lg:mr-2"></i> Unduh
-                    </button>
-                </div>
-                
             </div>
         </div>
 
@@ -292,11 +288,11 @@
             
             <!-- PANEL 1: BINGKAI -->
             <div class="bg-white p-3 lg:p-5 rounded-2xl lg:rounded-3xl shadow-lg border border-gray-100 mb-4 lg:mb-0">
-                <h3 class="font-extrabold text-lg text-gray-800 mb-2 lg:mb-4 flex items-center"><span class="bg-indigo-100 text-indigo-600 w-8 h-8 rounded-full flex items-center justify-center mr-2 text-sm">1</span> Pilih Bingkai</h3>
+                <h3 class="font-extrabold text-lg text-gray-800 mb-2 lg:mb-4 flex items-center" data-i18n="panel1_title"><span class="bg-indigo-100 text-indigo-600 w-8 h-8 rounded-full flex items-center justify-center mr-2 text-sm">1</span> Pilih Bingkai</h3>
                 
                 <div class="flex flex-row lg:flex-col overflow-x-auto lg:overflow-visible gap-2 lg:gap-0 hide-scrollbar pb-1 lg:pb-0 items-stretch">
                     
-                    <button onclick="toggleModal('search-modal')" class="flex-none w-[90px] lg:w-full mb-0 lg:mb-3 bg-gradient-to-br lg:bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white py-2 lg:py-4 rounded-xl font-bold text-xs lg:text-base shadow-md flex flex-col lg:flex-row justify-center items-center gap-1 lg:gap-2 whitespace-normal leading-tight text-center">
+                    <button onclick="toggleModal('search-modal')" class="flex-none w-[90px] lg:w-full mb-0 lg:mb-3 bg-gradient-to-br lg:bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white py-2 lg:py-4 rounded-xl font-bold text-xs lg:text-base shadow-md flex flex-col lg:flex-row justify-center items-center gap-1 lg:gap-2 whitespace-normal leading-tight text-center" data-i18n="btn_search">
                         <i class="fa-solid fa-cloud-arrow-down text-lg lg:text-xl"></i> <span class="lg:hidden">Cari Online</span><span class="hidden lg:inline">Cari Bingkai Online</span>
                     </button>
                     
@@ -305,15 +301,17 @@
                     </div>
                     
                     <label class="flex-none w-[90px] lg:w-full flex flex-col lg:flex-row justify-center items-center bg-gray-50 hover:bg-gray-100 border border-gray-300 lg:border-2 lg:border-dashed text-gray-700 rounded-xl py-2 lg:py-3 cursor-pointer text-xs lg:text-sm font-bold shadow-sm lg:shadow-none whitespace-normal leading-tight text-center transition-all">
-                        <i class="fa-solid fa-folder-open mb-1 lg:mb-0 lg:mr-2 text-lg text-indigo-500"></i> <span class="lg:hidden">Upload Bingkai</span><span class="hidden lg:inline">Upload Bingkai Sendiri</span>
+                        <span data-i18n="btn_upload_f" class="pointer-events-none flex flex-col lg:flex-row items-center justify-center">
+                            <i class="fa-solid fa-folder-open mb-1 lg:mb-0 lg:mr-2 text-lg text-indigo-500"></i> <span class="lg:hidden">Upload Bingkai</span><span class="hidden lg:inline">Upload Bingkai Sendiri</span>
+                        </span>
                         <input type="file" id="upload-frame" accept="image/png, image/jpeg" class="hidden">
                     </label>
                     
                     <div class="flex flex-row lg:flex-col gap-2 mt-0 lg:mt-3 lg:space-y-3 lg:w-full">
-                        <button id="btn-hide-frame" onclick="toggleFrame()" class="flex-none w-[90px] lg:w-full bg-gray-800 hover:bg-gray-900 text-white py-2 lg:py-3 rounded-xl font-bold text-xs lg:text-sm shadow-sm transition-colors flex flex-col lg:flex-row justify-center items-center whitespace-normal leading-tight text-center">
+                        <button id="btn-hide-frame" onclick="toggleFrame()" class="flex-none w-[90px] lg:w-full bg-gray-800 hover:bg-gray-900 text-white py-2 lg:py-3 rounded-xl font-bold text-xs lg:text-sm shadow-sm transition-colors flex flex-col lg:flex-row justify-center items-center whitespace-normal leading-tight text-center" data-i18n="btn_hide_f">
                             <i id="icon-hide-frame" class="fa-regular fa-eye-slash mb-1 lg:mb-0 lg:mr-2 text-lg lg:text-base"></i> <span id="text-hide-frame"><span class="lg:hidden">Sembunyi</span><span class="hidden lg:inline">Sembunyikan Bingkai</span></span>
                         </button>
-                        <button id="btn-remover" onclick="toggleTransparentMaker()" class="flex-none w-[90px] lg:w-full bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 py-2 lg:py-3 rounded-xl font-bold text-xs lg:text-sm transition-colors flex flex-col lg:flex-row justify-center items-center shadow-sm whitespace-normal leading-tight text-center">
+                        <button id="btn-remover" onclick="toggleTransparentMaker()" class="flex-none w-[90px] lg:w-full bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 py-2 lg:py-3 rounded-xl font-bold text-xs lg:text-sm transition-colors flex flex-col lg:flex-row justify-center items-center shadow-sm whitespace-normal leading-tight text-center" data-i18n="btn_rm_bg">
                             <i class="fa-solid fa-eraser mb-1 lg:mb-0 lg:mr-2 text-lg lg:text-base"></i> <span id="rm-text"><span class="lg:hidden">Hapus BG</span><span class="hidden lg:inline">Hapus Warna BG (Pilih Area)</span></span>
                         </button>
                     </div>
@@ -322,14 +320,16 @@
 
             <!-- PANEL 2: FOTO & KAMERA -->
             <div class="bg-white p-3 lg:p-5 rounded-2xl lg:rounded-3xl shadow-lg border border-gray-100 mb-4 lg:mb-0">
-                <h3 class="font-extrabold text-lg text-gray-800 mb-2 lg:mb-4 flex items-center"><span class="bg-purple-100 text-purple-600 w-8 h-8 rounded-full flex items-center justify-center mr-2 text-sm">2</span> Siapkan Foto</h3>
+                <h3 class="font-extrabold text-lg text-gray-800 mb-2 lg:mb-4 flex items-center" data-i18n="panel2_title"><span class="bg-purple-100 text-purple-600 w-8 h-8 rounded-full flex items-center justify-center mr-2 text-sm">2</span> Siapkan Foto</h3>
                 
                 <div class="grid grid-cols-2 gap-2 lg:gap-3 mb-1 lg:mb-3">
                     <label class="flex flex-row lg:flex-col justify-center items-center bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 rounded-xl py-3 cursor-pointer font-bold transition-colors text-center text-xs lg:text-sm">
-                        <i class="fa-regular fa-image text-xl lg:text-2xl mr-2 lg:mr-0 lg:mb-1"></i> Dari Galeri
+                        <span data-i18n="btn_gallery" class="pointer-events-none flex flex-row lg:flex-col items-center justify-center">
+                            <i class="fa-regular fa-image text-xl lg:text-2xl mr-2 lg:mr-0 lg:mb-1"></i> Dari Galeri
+                        </span>
                         <input type="file" id="upload-photo" accept="image/png, image/jpeg, image/webp" class="hidden">
                     </label>
-                    <button onclick="toggleModal('camera-modal'); initCamera();" class="flex flex-row lg:flex-col justify-center items-center bg-pink-50 hover:bg-pink-100 text-pink-700 border border-pink-200 rounded-xl py-3 font-bold transition-colors text-xs lg:text-sm">
+                    <button onclick="toggleModal('camera-modal'); initCamera();" class="flex flex-row lg:flex-col justify-center items-center bg-pink-50 hover:bg-pink-100 text-pink-700 border border-pink-200 rounded-xl py-3 font-bold transition-colors text-xs lg:text-sm" data-i18n="btn_camera">
                         <i class="fa-solid fa-camera text-xl lg:text-2xl mr-2 lg:mr-0 lg:mb-1"></i> Buka Kamera
                     </button>
                 </div>
@@ -337,13 +337,13 @@
 
             <!-- PANEL 3: EDITOR POSISI -->
             <div class="bg-white p-3 lg:p-5 rounded-2xl lg:rounded-3xl shadow-lg border border-gray-100">
-                <h3 class="font-extrabold text-lg text-gray-800 mb-2 lg:mb-4 flex items-center"><span class="bg-emerald-100 text-emerald-600 w-8 h-8 rounded-full flex items-center justify-center mr-2 text-sm">3</span> Atur Posisi & Alat</h3>
+                <h3 class="font-extrabold text-lg text-gray-800 mb-2 lg:mb-4 flex items-center" data-i18n="panel3_title"><span class="bg-emerald-100 text-emerald-600 w-8 h-8 rounded-full flex items-center justify-center mr-2 text-sm">3</span> Atur Posisi & Alat</h3>
                 
                 <!-- Layer Tab -->
                 <div class="flex p-1.5 bg-gray-100 rounded-xl mb-4 relative" id="layer-tabs">
                     <div id="layer-indicator" class="absolute top-1.5 left-1.5 w-[calc(50%-6px)] h-[calc(100%-12px)] bg-white rounded-lg shadow transition-transform duration-300"></div>
-                    <button id="tab-photo" onclick="setLayer('photo')" class="flex-1 text-indigo-700 font-bold py-2.5 rounded-lg text-sm transition-colors relative z-10">🖼️ Edit Foto</button>
-                    <button id="tab-frame" onclick="setLayer('frame')" class="flex-1 text-gray-500 hover:text-gray-800 font-bold py-2.5 rounded-lg text-sm transition-colors relative z-10">🔲 Edit Bingkai</button>
+                    <button id="tab-photo" onclick="setLayer('photo')" class="flex-1 text-indigo-700 font-bold py-2.5 rounded-lg text-sm transition-colors relative z-10" data-i18n="tab_photo">🖼️ Edit Foto</button>
+                    <button id="tab-frame" onclick="setLayer('frame')" class="flex-1 text-gray-500 hover:text-gray-800 font-bold py-2.5 rounded-lg text-sm transition-colors relative z-10" data-i18n="tab_frame">🔲 Edit Bingkai</button>
                 </div>
                 
                 <!-- Transform Tool -->
@@ -372,17 +372,28 @@
                         <button onclick="transform('flipV')" class="flex-1 min-w-[50px] bg-gray-50 hover:bg-gray-200 border border-gray-200 text-gray-700 py-3 rounded-xl text-lg shadow-sm active:scale-95 transition-transform"><i class="fa-solid fa-clock-rotate-left fa-rotate-90"></i></button>
                     </div>
                 </div>
-
-                
-
-                
+            </div>
+            
+            <!-- PANEL 4: UNDUH HASIL -->
+            <div class="bg-white p-3 lg:p-5 rounded-2xl lg:rounded-3xl shadow-lg border border-gray-100">
+                <h3 class="font-extrabold text-lg text-gray-800 mb-2 lg:mb-4 flex items-center" data-i18n="panel4_title"><span class="bg-blue-100 text-blue-600 w-8 h-8 rounded-full flex items-center justify-center mr-2 text-sm">4</span> Unduh Hasil</h3>
+                <div class="flex flex-col sm:flex-row lg:flex-col gap-2 lg:gap-3">
+                    <select id="export-quality" class="bg-gray-50 border border-gray-300 text-gray-900 py-3 px-4 rounded-xl font-bold outline-none focus:border-indigo-500 transition-all cursor-pointer w-full sm:w-1/3 lg:w-full">
+                        <option value="480">Mini (VGA)</option>
+                        <option value="720">Standar (SD)</option>
+                        <option value="1080" selected>Tinggi (HD)</option>
+                        <option value="1440">Super (FHD+)</option>
+                    </select>
+                    <button onclick="downloadTwibbon()" class="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white py-3 px-6 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all flex items-center justify-center w-full sm:w-2/3 lg:w-full" data-i18n="btn_download">
+                        <i class="fa-solid fa-download mr-2"></i> Unduh
+                    </button>
+                </div>
             </div>
             
             <div class="h-6"></div>
         </div>
     </section>
 
-    
     <!-- ================= MODAL KAMERA ================= -->
     <div id="camera-modal" class="fixed inset-0 bg-gray-900/90 backdrop-blur-md z-[80] modal-inactive flex justify-center items-center p-4">
         <div class="bg-black rounded-3xl w-full max-w-md h-[80vh] flex flex-col shadow-2xl relative overflow-hidden">
@@ -393,7 +404,6 @@
             
             <div class="flex-grow flex items-center justify-center bg-black relative">
                 <video id="camera-feed" autoplay playsinline class="w-full h-full object-cover transform scale-x-[-1]"></video>
-                <!-- Guideline box -->
                 <div class="absolute inset-0 border-2 border-white/30 m-8 rounded-2xl pointer-events-none border-dashed"></div>
             </div>
 
@@ -406,7 +416,6 @@
     <!-- ================= MODAL PENCARIAN BINGKAI ================= -->
     <div id="search-modal" class="fixed inset-0 bg-gray-900/80 backdrop-blur-sm z-[60] modal-inactive flex justify-center items-center p-4 lg:p-10">
         <div id="search-content" class="bg-white rounded-2xl w-full max-w-4xl h-[85vh] flex flex-col shadow-2xl modal-content-inactive overflow-hidden relative border border-gray-200">
-            <!-- Header Modal -->
             <div class="flex justify-between items-center p-5 border-b border-gray-200 bg-gray-50">
                 <h3 class="text-xl font-bold text-gray-800 flex items-center">
                     <i class="fa-solid fa-cloud-arrow-down text-indigo-600 mr-3"></i> Cari Bingkai Online
@@ -416,7 +425,6 @@
                 </button>
             </div>
             
-            <!-- Area Input & Filter (Tema Terang) -->
             <div class="p-5 border-b border-gray-200 bg-white space-y-3">
                 <div class="flex gap-2">
                     <div class="relative flex-grow">
@@ -484,7 +492,6 @@
                 </div>
             </div>
 
-            <!-- Area Hasil Pencarian (Tema Terang) -->
             <div class="flex-grow p-5 overflow-y-auto custom-scroll bg-gray-50" id="search-results-container">
                 <div id="search-initial-state" class="h-full flex flex-col items-center justify-center text-center p-4">
                     <div class="w-24 h-24 bg-white rounded-2xl flex items-center justify-center mb-4 border border-gray-200 shadow-sm">
@@ -495,10 +502,9 @@
                 </div>
                 <div id="search-loading" class="hidden h-full flex flex-col items-center justify-center">
                     <div class="w-12 h-12 border-4 border-gray-200 border-t-indigo-600 rounded-full animate-spin mb-3"></div>
-                    <p class="text-gray-500 text-sm font-medium">Mencari bingkai ke server...</p>
+                    <p class="text-gray-500 text-sm font-medium" data-i18n="search_loading">Mencari bingkai ke server...</p>
                 </div>
                 <div id="search-results-grid" class="hidden grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    <!-- Hasil pencarian akan muncul di sini -->
                 </div>
                 <div id="search-error" class="hidden h-full flex flex-col items-center justify-center text-center p-4">
                     <i class="fa-solid fa-triangle-exclamation text-4xl text-red-500 mb-3"></i>
@@ -508,7 +514,6 @@
                 </div>
             </div>
 
-            <!-- Footer Pagination (Tema Terang) -->
             <div class="p-4 border-t border-gray-200 bg-white flex justify-between items-center hidden" id="search-pagination">
                 <button id="btn-prev-page" onclick="searchFrames(currentSearchPage - 1)" class="bg-gray-100 hover:bg-gray-200 border border-gray-300 text-gray-700 font-medium py-2 px-4 rounded-lg transition-colors text-sm flex items-center disabled:opacity-50 disabled:cursor-not-allowed">
                     <i class="fa-solid fa-angle-left mr-2"></i> Sebelumnya
@@ -542,7 +547,115 @@
 
     <!-- ================= SCRIPT JAVASCRIPT LOGIKA UTAMA ================= -->
     <script>
-        // 1. NAVIGASI HALAMAN & MODAL
+        let currentLang = 'id';
+        const translations = {
+            'id': {
+                'title_theme': 'Pilih Tema',
+                'btn_coffee': '<i class="fa-solid fa-mug-hot mr-2"></i> Traktir Kopi',
+                'badge_free': '100% GRATIS SELAMANYA',
+                'hero_title': 'Desain Twibbon Kelas Pro,<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">Langsung dari Browser</span>',
+                'hero_desc': 'Tidak perlu daftar, tidak perlu install aplikasi. Hasil beresolusi tinggi, tanpa embel-embel watermark.',
+                'btn_start': 'Mulai Buat Sekarang <i class="fa-solid fa-arrow-right ml-2"></i>',
+                'step_title': 'Cara Kerja Semudah 1-2-3',
+                'step1_title': 'Pilih Bingkai',
+                'step1_desc': 'Upload desain Anda sendiri atau cari dari ribuan koleksi tema yang kami sediakan.',
+                'step2_title': 'Masukkan Foto',
+                'step2_desc': 'Upload foto atau jepret langsung dari kamera. Geser dan sesuaikan posisinya.',
+                'step3_title': 'Unduh Hasilnya',
+                'step3_desc': 'Satu klik untuk mengunduh gambar resolusi tinggi (HD) tanpa batas.',
+                'p_title': '<i class="fa-solid fa-shield-halved text-green-400 mr-3 text-2xl"></i> Privasi Anda Terjamin 100%',
+                'p_desc': 'Semua proses pemotongan dan editing dilakukan langsung di memori perangkat Anda (HP/Laptop). Kami <strong>TIDAK PERNAH</strong> mengunggah foto pribadi Anda ke server kami.',
+                'canvas_area': '<i class="fa-regular fa-image text-4xl mb-2"></i><br>Area Kanvas',
+                'act_back': '<i class="fa-solid fa-arrow-left"></i> Kembali',
+                'act_undo': '<i class="fa-solid fa-rotate-left"></i> Undo',
+                'act_redo': '<i class="fa-solid fa-rotate-right"></i> Redo',
+                'act_reset': '<i class="fa-solid fa-arrows-rotate"></i> Reset',
+                'act_new': '<i class="fa-solid fa-trash-can"></i> Baru',
+                'panel1_title': '<span class="bg-indigo-100 text-indigo-600 w-8 h-8 rounded-full flex items-center justify-center mr-2 text-sm">1</span> Pilih Bingkai',
+                'btn_search': '<i class="fa-solid fa-cloud-arrow-down text-lg lg:text-xl"></i> <span class="lg:hidden">Cari Online</span><span class="hidden lg:inline">Cari Bingkai Online</span>',
+                'btn_upload_f': '<i class="fa-solid fa-folder-open mb-1 lg:mb-0 lg:mr-2 text-lg text-indigo-500"></i> <span class="lg:hidden">Upload Bingkai</span><span class="hidden lg:inline">Upload Bingkai Sendiri</span>',
+                'btn_hide_f': '<i id="icon-hide-frame" class="fa-regular fa-eye-slash mb-1 lg:mb-0 lg:mr-2 text-lg lg:text-base"></i> <span id="text-hide-frame"><span class="lg:hidden">Sembunyi</span><span class="hidden lg:inline">Sembunyikan Bingkai</span></span>',
+                'btn_rm_bg': '<i class="fa-solid fa-eraser mb-1 lg:mb-0 lg:mr-2 text-lg lg:text-base"></i> <span id="rm-text"><span class="lg:hidden">Hapus BG</span><span class="hidden lg:inline">Hapus Warna BG (Pilih Area)</span></span>',
+                'panel2_title': '<span class="bg-purple-100 text-purple-600 w-8 h-8 rounded-full flex items-center justify-center mr-2 text-sm">2</span> Siapkan Foto',
+                'btn_gallery': '<i class="fa-regular fa-image text-xl lg:text-2xl mr-2 lg:mr-0 lg:mb-1"></i> Dari Galeri',
+                'btn_camera': '<i class="fa-solid fa-camera text-xl lg:text-2xl mr-2 lg:mr-0 lg:mb-1"></i> Buka Kamera',
+                'panel3_title': '<span class="bg-emerald-100 text-emerald-600 w-8 h-8 rounded-full flex items-center justify-center mr-2 text-sm">3</span> Atur Posisi & Alat',
+                'tab_photo': '🖼️ Edit Foto',
+                'tab_frame': '🔲 Edit Bingkai',
+                'panel4_title': '<span class="bg-blue-100 text-blue-600 w-8 h-8 rounded-full flex items-center justify-center mr-2 text-sm">4</span> Unduh Hasil',
+                'btn_download': '<i class="fa-solid fa-download mr-2"></i> Unduh',
+                'search_loading': 'Mencari bingkai ke server...'
+            },
+            'en': {
+                'title_theme': 'Choose Theme',
+                'btn_coffee': '<i class="fa-solid fa-mug-hot mr-2"></i> Buy me Coffee',
+                'badge_free': '100% FREE FOREVER',
+                'hero_title': 'Pro Twibbon Design,<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">Right from Browser</span>',
+                'hero_desc': 'No registration, no app install required. High resolution output, absolutely no watermark.',
+                'btn_start': 'Start Creating Now <i class="fa-solid fa-arrow-right ml-2"></i>',
+                'step_title': 'As Easy As 1-2-3',
+                'step1_title': 'Choose Frame',
+                'step1_desc': 'Upload your own design or search from thousands of our provided templates.',
+                'step2_title': 'Insert Photo',
+                'step2_desc': 'Upload a photo or snap one directly from camera. Drag and adjust its position.',
+                'step3_title': 'Download Result',
+                'step3_desc': 'One click to download high-resolution (HD) images without limits.',
+                'p_title': '<i class="fa-solid fa-shield-halved text-green-400 mr-3 text-2xl"></i> Your Privacy is 100% Guaranteed',
+                'p_desc': 'All cropping and editing processes are done directly in your device\'s memory (Phone/Laptop). We <strong>NEVER</strong> upload your personal photos to our servers.',
+                'canvas_area': '<i class="fa-regular fa-image text-4xl mb-2"></i><br>Canvas Area',
+                'act_back': '<i class="fa-solid fa-arrow-left"></i> Back',
+                'act_undo': '<i class="fa-solid fa-rotate-left"></i> Undo',
+                'act_redo': '<i class="fa-solid fa-rotate-right"></i> Redo',
+                'act_reset': '<i class="fa-solid fa-arrows-rotate"></i> Reset',
+                'act_new': '<i class="fa-solid fa-trash-can"></i> New',
+                'panel1_title': '<span class="bg-indigo-100 text-indigo-600 w-8 h-8 rounded-full flex items-center justify-center mr-2 text-sm">1</span> Choose Frame',
+                'btn_search': '<i class="fa-solid fa-cloud-arrow-down text-lg lg:text-xl"></i> <span class="lg:hidden">Search</span><span class="hidden lg:inline">Search Frame Online</span>',
+                'btn_upload_f': '<i class="fa-solid fa-folder-open mb-1 lg:mb-0 lg:mr-2 text-lg text-indigo-500"></i> <span class="lg:hidden">Upload</span><span class="hidden lg:inline">Upload Own Frame</span>',
+                'btn_hide_f': '<i id="icon-hide-frame" class="fa-regular fa-eye-slash mb-1 lg:mb-0 lg:mr-2 text-lg lg:text-base"></i> <span id="text-hide-frame"><span class="lg:hidden">Hide</span><span class="hidden lg:inline">Hide Frame</span></span>',
+                'btn_rm_bg': '<i class="fa-solid fa-eraser mb-1 lg:mb-0 lg:mr-2 text-lg lg:text-base"></i> <span id="rm-text"><span class="lg:hidden">Remove BG</span><span class="hidden lg:inline">Remove BG Color</span></span>',
+                'panel2_title': '<span class="bg-purple-100 text-purple-600 w-8 h-8 rounded-full flex items-center justify-center mr-2 text-sm">2</span> Prepare Photo',
+                'btn_gallery': '<i class="fa-regular fa-image text-xl lg:text-2xl mr-2 lg:mr-0 lg:mb-1"></i> Gallery',
+                'btn_camera': '<i class="fa-solid fa-camera text-xl lg:text-2xl mr-2 lg:mr-0 lg:mb-1"></i> Camera',
+                'panel3_title': '<span class="bg-emerald-100 text-emerald-600 w-8 h-8 rounded-full flex items-center justify-center mr-2 text-sm">3</span> Adjust & Tools',
+                'tab_photo': '🖼️ Edit Photo',
+                'tab_frame': '🔲 Edit Frame',
+                'panel4_title': '<span class="bg-blue-100 text-blue-600 w-8 h-8 rounded-full flex items-center justify-center mr-2 text-sm">4</span> Download',
+                'btn_download': '<i class="fa-solid fa-download mr-2"></i> Download',
+                'search_loading': 'Searching frames from server...'
+            }
+        };
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            const btnID = document.getElementById('btn-lang-id');
+            const btnEN = document.getElementById('btn-lang-en');
+            
+            if(lang === 'id') {
+                btnID.className = 'bg-indigo-600 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-sm transition-colors';
+                btnEN.className = 'text-indigo-400 hover:text-indigo-700 px-3 py-1.5 rounded-full text-xs font-bold transition-colors';
+            } else {
+                btnEN.className = 'bg-indigo-600 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-sm transition-colors';
+                btnID.className = 'text-indigo-400 hover:text-indigo-700 px-3 py-1.5 rounded-full text-xs font-bold transition-colors';
+            }
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+            
+            // Re-apply dynamic states
+            if (isFrameHidden) {
+                const text = document.getElementById('text-hide-frame');
+                if(text) text.innerHTML = lang === 'id' ? '<span class="lg:hidden">Tampilkan</span><span class="hidden lg:inline">Tampilkan Bingkai (Sedang Sembunyi)</span>' : '<span class="lg:hidden">Show</span><span class="hidden lg:inline">Show Frame (Hidden)</span>';
+            }
+            if (isPickingColor) {
+                const text = document.getElementById('rm-text');
+                if(text) text.innerHTML = lang === 'id' ? '<span class="lg:hidden">Klik Area!</span><span class="hidden lg:inline">Klik warna di Kanvas!</span>' : '<span class="lg:hidden">Click Canvas!</span><span class="hidden lg:inline">Click color on Canvas!</span>';
+            }
+        }
+
         const landingPage = document.getElementById('landing-page');
         const editorPage = document.getElementById('editor-page');
 
@@ -579,12 +692,11 @@
             }
         }
 
-        // 2. SISTEM TEMA (THEME SWITCHER)
         function changeTheme(themeName) {
             document.body.setAttribute('data-theme', themeName);
             localStorage.setItem('savedTheme', themeName);
         }
-        // SET DEFAULT TEMA TERANG (LIGHT) BILA TIDAK ADA RIWAYAT
+        
         const savedTheme = localStorage.getItem('savedTheme');
         if (savedTheme) {
             changeTheme(savedTheme);
@@ -592,9 +704,6 @@
             changeTheme('light');
         }
 
-        
-
-        // 4. ANIMASI HUJAN (CANVAS SUPER RINGAN)
         const rainCanvas = document.getElementById('rainCanvas');
         const bgCtx = rainCanvas.getContext('2d');
         let canvasWidth, canvasHeight;
@@ -615,9 +724,8 @@
         function drawRain() {
             bgCtx.clearRect(0, 0, canvasWidth, canvasHeight);
             const computedStyle = getComputedStyle(document.body);
-            // Fallback ke hitam transparan jika variabel belum terbaca
             bgCtx.strokeStyle = computedStyle.getPropertyValue('--rain-color').trim() || 'rgba(0,0,0,0.5)';
-            bgCtx.lineWidth = 2.0; // Garis hujan lebih tebal
+            bgCtx.lineWidth = 2.0; 
             bgCtx.lineCap = 'round'; 
             bgCtx.beginPath();
             
@@ -637,18 +745,13 @@
         }
         drawRain();
 
-        // ==========================================================
-        // 5. ENGINE EDITOR TWIBBON UTAMA (CANVAS API)
-        // ==========================================================
         const editorCanvas = document.getElementById('editor-canvas');
         const ctx = editorCanvas.getContext('2d', { willReadFrequently: true });
         
-        // Ukuran logis dinamis
         let CANVAS_W = 1080;
         let CANVAS_H = 1080;
         let currentRatio = '1:1';
 
-        // State Gambar (Layer)
         let layers = {
             photo: { img: null, originalImg: null, x: CANVAS_W/2, y: CANVAS_H/2, scale: 1, rot: 0, flipH: 1, flipV: 1 },
             frame: { img: null, originalImg: null, x: CANVAS_W/2, y: CANVAS_H/2, scale: 1, rot: 0, flipH: 1, flipV: 1 }
@@ -660,10 +763,8 @@
         let historyStack = [];
         let redoStack = [];
 
-        
-        // --- Sistem Kamera ---
         let videoStream = null;
-        let facingMode = 'user'; // 'user' (depan) atau 'environment' (belakang)
+        let facingMode = 'user';
         const videoElement = document.getElementById('camera-feed');
 
         async function initCamera() {
@@ -677,14 +778,13 @@
                 videoStream = await navigator.mediaDevices.getUserMedia(constraints);
                 videoElement.srcObject = videoStream;
                 
-                // Mirror kamera depan
                 if(facingMode === 'user') {
                     videoElement.style.transform = 'scaleX(-1)';
                 } else {
                     videoElement.style.transform = 'scaleX(1)';
                 }
             } catch (err) {
-                alert("Akses kamera ditolak atau kamera tidak ditemukan: " + err.message);
+                alert((currentLang === 'id' ? "Akses kamera ditolak atau kamera tidak ditemukan: " : "Camera access denied or camera not found: ") + err.message);
                 closeCamera();
             }
         }
@@ -710,7 +810,6 @@
             snapCanvas.height = videoElement.videoHeight;
             const snapCtx = snapCanvas.getContext('2d');
             
-            // Mirror hasil jepretan jika kamera depan
             if(facingMode === 'user') {
                 snapCtx.translate(snapCanvas.width, 0);
                 snapCtx.scale(-1, 1);
@@ -733,18 +832,14 @@
             img.src = snapCanvas.toDataURL('image/jpeg', 0.9);
         }
     
-        // --- Ganti Rasio & Mencegah Scroll Vertikal ---
-        
-        // --- Fitur Buat Baru ---
         function buatBaru() {
-            if(confirm("Yakin ingin menghapus semua gambar dan membuat baru?")) {
+            if(confirm(currentLang === 'id' ? "Yakin ingin menghapus semua gambar dan membuat baru?" : "Are you sure you want to delete all images and create new?")) {
                 layers = {
                     photo: { img: null, originalImg: null, x: CANVAS_W/2, y: CANVAS_H/2, scale: 1, rot: 0, flipH: 1, flipV: 1 },
                     frame: { img: null, originalImg: null, x: CANVAS_W/2, y: CANVAS_H/2, scale: 1, rot: 0, flipH: 1, flipV: 1 }
                 };
                 historyStack = [];
                 isFrameHidden = false;
-                 
                 
                 document.getElementById('upload-frame').value = "";
                 document.getElementById('upload-photo').value = "";
@@ -753,12 +848,12 @@
                 btnFrame.classList.replace('bg-indigo-600', 'bg-gray-800');
                 btnFrame.classList.replace('hover:bg-indigo-700', 'hover:bg-gray-900');
                 document.getElementById('icon-hide-frame').className = 'fa-regular fa-eye-slash mr-2';
-                document.getElementById("text-hide-frame").innerHTML = '<span class="lg:hidden">Sembunyi</span><span class="hidden lg:inline">Sembunyikan Bingkai</span>';
+                document.getElementById("text-hide-frame").innerHTML = currentLang === 'id' ? '<span class="lg:hidden">Sembunyi</span><span class="hidden lg:inline">Sembunyikan Bingkai</span>' : '<span class="lg:hidden">Hide</span><span class="hidden lg:inline">Hide Frame</span>';
                 
                 const btnRemover = document.getElementById('btn-remover');
                 btnRemover.classList.replace('bg-red-600', 'bg-red-50');
                 btnRemover.classList.replace('text-white', 'text-red-600');
-                document.getElementById("rm-text").innerHTML = '<span class="lg:hidden">Hapus BG</span><span class="hidden lg:inline">Hapus Warna BG (Pilih Area)</span>';
+                document.getElementById("rm-text").innerHTML = currentLang === 'id' ? '<span class="lg:hidden">Hapus BG</span><span class="hidden lg:inline">Hapus Warna BG (Pilih Area)</span>' : '<span class="lg:hidden">Remove BG</span><span class="hidden lg:inline">Remove BG Color</span>';
                 document.getElementById('editor-canvas').classList.remove('cursor-crosshair');
                 isPickingColor = false;
                 
@@ -770,42 +865,33 @@
             currentRatio = ratio;
             const cContainer = document.getElementById('canvas-container');
             
-            // Reset Desk buttons
             ['btn-ratio-1', 'btn-ratio-2', 'btn-ratio-3'].forEach(id => {
                 const btn = document.getElementById(id);
                 if(btn) btn.className = "flex-1 bg-gray-50 hover:bg-gray-200 border border-gray-200 text-gray-700 font-bold py-2 rounded-xl text-xs sm:text-sm shadow-sm transition-colors";
             });
-            // Reset Mobile buttons
-            ['btn-ratio-1-m', 'btn-ratio-2-m', 'btn-ratio-3-m'].forEach(id => {
-                const btn = document.getElementById(id);
-                if(btn) btn.className = "w-full aspect-square bg-gray-50 hover:bg-gray-200 border border-gray-200 text-gray-700 rounded-xl text-sm shadow-sm transition-colors flex items-center justify-center";
-            });
 
-            let activeBtn, activeBtnM;
+            let activeBtn;
             if(ratio === '1:1') { 
                 CANVAS_W = 1080; CANVAS_H = 1080; 
                 cContainer.style.aspectRatio = '1/1'; 
                 cContainer.style.maxWidth = '500px';
-                activeBtn = 'btn-ratio-1'; activeBtnM = 'btn-ratio-1-m';
+                activeBtn = 'btn-ratio-1';
             }
             if(ratio === '9:16') { 
                 CANVAS_W = 1080; CANVAS_H = 1920; 
                 cContainer.style.aspectRatio = '9/16'; 
                 cContainer.style.maxWidth = '320px'; 
-                activeBtn = 'btn-ratio-2'; activeBtnM = 'btn-ratio-2-m';
+                activeBtn = 'btn-ratio-2';
             }
             if(ratio === '16:9') { 
                 CANVAS_W = 1920; CANVAS_H = 1080; 
                 cContainer.style.aspectRatio = '16/9'; 
                 cContainer.style.maxWidth = '500px';
-                activeBtn = 'btn-ratio-3'; activeBtnM = 'btn-ratio-3-m';
+                activeBtn = 'btn-ratio-3';
             }
 
             const dBtn = document.getElementById(activeBtn);
             if(dBtn) dBtn.className = "flex-1 bg-indigo-600 text-white font-bold py-2 rounded-xl text-xs sm:text-sm shadow transition-colors";
-            
-            const mBtn = document.getElementById(activeBtnM);
-            if(mBtn) mBtn.className = "w-full aspect-square bg-indigo-600 text-white rounded-xl text-sm shadow transition-colors flex items-center justify-center";
 
             editorCanvas.width = CANVAS_W;
             editorCanvas.height = CANVAS_H;
@@ -817,19 +903,17 @@
             renderEditor();
         }
 
-        // --- Fitur Undo & Reset ---
         function saveState() {
             historyStack.push({
                 photo: { ...layers.photo, img: layers.photo.img, originalImg: layers.photo.originalImg },
                 frame: { ...layers.frame, img: layers.frame.img, originalImg: layers.frame.originalImg }
             });
             if(historyStack.length > 20) historyStack.shift();
-            redoStack = []; // Kosongkan redo saat ada aksi baru
+            redoStack = []; 
         }
 
         function undo() {
             if(historyStack.length > 0) {
-                // Simpan state saat ini ke redoStack sebelum mundur
                 redoStack.push({
                     photo: { ...layers.photo, img: layers.photo.img, originalImg: layers.photo.originalImg },
                     frame: { ...layers.frame, img: layers.frame.img, originalImg: layers.frame.originalImg }
@@ -841,13 +925,12 @@
                 
                 renderEditor();
             } else {
-                alert("Tidak ada langkah untuk di-undo.");
+                alert(currentLang === 'id' ? "Tidak ada langkah untuk di-undo." : "No steps to undo.");
             }
         }
 
         function redo() {
             if(redoStack.length > 0) {
-                // Simpan state saat ini ke historyStack sebelum maju
                 historyStack.push({
                     photo: { ...layers.photo, img: layers.photo.img, originalImg: layers.photo.originalImg },
                     frame: { ...layers.frame, img: layers.frame.img, originalImg: layers.frame.originalImg }
@@ -859,7 +942,7 @@
                 
                 renderEditor();
             } else {
-                alert("Tidak ada langkah untuk di-redo.");
+                alert(currentLang === 'id' ? "Tidak ada langkah untuk di-redo." : "No steps to redo.");
             }
         }
 
@@ -878,7 +961,6 @@
             renderEditor();
         }
 
-        // --- Fitur Sembunyikan Bingkai ---
         function toggleFrame() {
             isFrameHidden = !isFrameHidden;
             const btn = document.getElementById('btn-hide-frame');
@@ -889,17 +971,16 @@
                 btn.classList.replace('bg-gray-800', 'bg-indigo-600');
                 btn.classList.replace('hover:bg-gray-900', 'hover:bg-indigo-700');
                 icon.className = 'fa-regular fa-eye mr-2';
-                text.innerHTML = '<span class="lg:hidden">Tampilkan</span><span class="hidden lg:inline">Tampilkan Bingkai (Sedang Sembunyi)</span>';
+                text.innerHTML = currentLang === 'id' ? '<span class="lg:hidden">Tampilkan</span><span class="hidden lg:inline">Tampilkan Bingkai (Sedang Sembunyi)</span>' : '<span class="lg:hidden">Show</span><span class="hidden lg:inline">Show Frame (Hidden)</span>';
             } else {
                 btn.classList.replace('bg-indigo-600', 'bg-gray-800');
                 btn.classList.replace('hover:bg-indigo-700', 'hover:bg-gray-900');
                 icon.className = 'fa-regular fa-eye-slash mr-2';
-                text.innerHTML = '<span class="lg:hidden">Sembunyi</span><span class="hidden lg:inline">Sembunyikan Bingkai</span>';
+                text.innerHTML = currentLang === 'id' ? '<span class="lg:hidden">Sembunyi</span><span class="hidden lg:inline">Sembunyikan Bingkai</span>' : '<span class="lg:hidden">Hide</span><span class="hidden lg:inline">Hide Frame</span>';
             }
             renderEditor();
         }
 
-        // --- Render UI Layer (Switch) ---
         function setLayer(type) {
             activeLayer = type;
             const ind = document.getElementById('layer-indicator');
@@ -908,23 +989,17 @@
             
             if(type === 'photo') {
                 ind.style.transform = 'translateX(0)';
-                
                 tabP.className = 'flex-1 text-white font-bold py-2.5 rounded-lg text-sm transition-colors relative z-10 bg-indigo-600 shadow-md';
                 tabF.className = 'flex-1 text-gray-500 hover:text-gray-800 font-bold py-2.5 rounded-lg text-sm transition-colors relative z-10';
-                
-                // Sembunyikan background putih indicator agar warna bg tombol terlihat (opsional)
                 ind.style.opacity = '0';
             } else {
                 ind.style.transform = 'translateX(100%)';
-                
                 tabF.className = 'flex-1 text-white font-bold py-2.5 rounded-lg text-sm transition-colors relative z-10 bg-indigo-600 shadow-md';
                 tabP.className = 'flex-1 text-gray-500 hover:text-gray-800 font-bold py-2.5 rounded-lg text-sm transition-colors relative z-10';
-                
                 ind.style.opacity = '0';
             }
         }
 
-        // --- Core: Draw / Render Canvas Utama ---
         function renderEditor() {
             ctx.clearRect(0, 0, CANVAS_W, CANVAS_H);
             if(layers.frame.img || layers.photo.img) {
@@ -933,15 +1008,11 @@
                 document.getElementById('canvas-placeholder').style.display = 'block';
             }
 
-            // Lapisan Dasar (Putih transparan agar mudah dilihat saat ada foto transparan)
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
 
-            // Layer Foto (Di bawah)
             if(layers.photo.img) {
                 ctx.save();
-                
-                
                 let p = layers.photo;
                 ctx.translate(p.x, p.y);
                 ctx.rotate(p.rot * Math.PI / 180);
@@ -953,7 +1024,6 @@
                 ctx.restore();
             }
 
-            // Layer Bingkai (Di Atas)
             if(layers.frame.img && !isFrameHidden) {
                 ctx.save();
                 let f = layers.frame;
@@ -968,7 +1038,6 @@
             }
         }
 
-        // --- Upload Handler ---
         document.getElementById('upload-frame').addEventListener('change', e => {
             const file = e.target.files[0]; if(!file) return;
             const img = new Image();
@@ -980,7 +1049,7 @@
                 layers.frame.x = CANVAS_W/2; layers.frame.y = CANVAS_H/2;
                 layers.frame.rot = 0; layers.frame.flipH = 1; layers.frame.flipV = 1;
                 
-                if(isFrameHidden) toggleFrame(); // Show frame automatically if it was hidden
+                if(isFrameHidden) toggleFrame(); 
                 
                 renderEditor(); 
                 setLayer('photo');
@@ -995,7 +1064,6 @@
                 saveState();
                 layers.photo.img = img;
                 layers.photo.originalImg = img;
-                // Auto Fit-to-screen
                 layers.photo.scale = Math.max(CANVAS_W/img.width, CANVAS_H/img.height);
                 layers.photo.x = CANVAS_W/2; layers.photo.y = CANVAS_H/2;
                 layers.photo.rot = 0; layers.photo.flipH = 1; layers.photo.flipV = 1;
@@ -1005,12 +1073,10 @@
             img.src = URL.createObjectURL(file);
         });
 
-        // --- Dragging System & Multi-touch (Mouse & Touch) ---
         let isDragging = false;
         let startX, startY;
         let dragStartState = null;
         
-        // Multi-touch variables
         let initialDistance = null;
         let initialAngle = null;
         let initialScale = null;
@@ -1030,7 +1096,6 @@
         function selectLayerByClick(p) {
             if(!layers.frame.img || isFrameHidden) { setLayer('photo'); return; }
             
-            // Render frame ke memori sbg deteksi lubang transparan
             const tempC = document.createElement('canvas');
             tempC.width = CANVAS_W; tempC.height = CANVAS_H;
             const tCtx = tempC.getContext('2d');
@@ -1047,9 +1112,9 @@
             
             const pixel = tCtx.getImageData(p.x, p.y, 1, 1).data;
             if(pixel[3] < 20) { 
-                setLayer('photo'); // Area transparan -> Pilih Foto
+                setLayer('photo'); 
             } else {
-                setLayer('frame'); // Area solid -> Pilih Bingkai
+                setLayer('frame'); 
             }
         }
 
@@ -1067,7 +1132,6 @@
             } else {
                 isMultiTouch = false;
                 
-                // Fitur sentuh layar untuk memilih layer
                 if(e.type === 'touchstart' || e.type === 'mousedown') {
                     selectLayerByClick(p);
                 }
@@ -1103,7 +1167,6 @@
             if(isPickingColor && e.touches) e.preventDefault();
             if(!layers[activeLayer].img) return;
             
-            // Multitouch (Zoom & Putar dengan dua jari)
             if (e.touches && e.touches.length === 2 && isMultiTouch) {
                 e.preventDefault();
                 const currentDistance = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
@@ -1133,7 +1196,6 @@
         window.addEventListener('mousemove', moveDrag);
         editorCanvas.addEventListener('touchmove', moveDrag, {passive: false});
 
-        // --- Tool Transformasi ---
         function transform(action) {
             let l = layers[activeLayer];
             if(!l.img) return;
@@ -1149,12 +1211,8 @@
             renderEditor();
         }
 
-        // --- Fitur Ekstra ---
-        
-
-        // Penghapus Latar Belakang (Chroma Key Sederhana)
         function toggleTransparentMaker() {
-            if(!layers.frame.img) { alert("Harap upload bingkai terlebih dahulu!"); return; }
+            if(!layers.frame.img) { alert(currentLang === 'id' ? "Harap upload bingkai terlebih dahulu!" : "Please upload a frame first!"); return; }
             if(isFrameHidden) toggleFrame(); 
 
             isPickingColor = !isPickingColor;
@@ -1163,14 +1221,14 @@
             if(isPickingColor) {
                 btn.classList.replace('bg-red-50', 'bg-red-600');
                 btn.classList.replace('text-red-600', 'text-white');
-                document.getElementById('rm-text').innerHTML = '<span class="lg:hidden">Klik Area!</span><span class="hidden lg:inline">Klik warna di Kanvas!</span>';
+                document.getElementById('rm-text').innerHTML = currentLang === 'id' ? '<span class="lg:hidden">Klik Area!</span><span class="hidden lg:inline">Klik warna di Kanvas!</span>' : '<span class="lg:hidden">Click Canvas!</span><span class="hidden lg:inline">Click color on Canvas!</span>';
                 editorCanvas.classList.add('cursor-crosshair');
                 
                 let temp = layers.photo.img; layers.photo.img = null; renderEditor(); layers.photo.img = temp;
             } else {
                 btn.classList.replace('bg-red-600', 'bg-red-50');
                 btn.classList.replace('text-white', 'text-red-600');
-                document.getElementById('rm-text').innerHTML = '<span class="lg:hidden">Hapus BG</span><span class="hidden lg:inline">Hapus Warna BG (Pilih Area)</span>';
+                document.getElementById('rm-text').innerHTML = currentLang === 'id' ? '<span class="lg:hidden">Hapus BG</span><span class="hidden lg:inline">Hapus Warna BG (Pilih Area)</span>' : '<span class="lg:hidden">Remove BG</span><span class="hidden lg:inline">Remove BG Color</span>';
                 editorCanvas.classList.remove('cursor-crosshair');
                 renderEditor(); 
             }
@@ -1183,7 +1241,7 @@
             
             if(pixel[3] === 0) { toggleTransparentMaker(); return; } 
 
-            saveState(); // Simpan riwayat untuk undo
+            saveState(); 
 
             const offC = document.createElement('canvas');
             offC.width = layers.frame.img.width; offC.height = layers.frame.img.height;
@@ -1206,14 +1264,11 @@
             newImg.src = offC.toDataURL();
         }
 
-        // --- Pencarian Bingkai Online (Pixabay API) ---
-        // Menggunakan API Pixabay. Format gambar vektor/ilustrasi sangat membantu menemukan bingkai twibbon transparan.
         const PIXABAY_API_KEY = '14693802-fc0e426a7b0c19e4f1c82de28';
         let currentSearchPage = 1;
         let currentTotalHits = 0;
-        const perPage = 12; // Dikurangi agar loading lebih cepat
+        const perPage = 12; 
 
-        // Kamus Terjemahan Otomatis (Indonesia ke Inggris)
         const idToEnDictionary = {
             "ramadhan": "ramadan",
             "lebaran": "eid",
@@ -1258,16 +1313,12 @@
             const color = document.getElementById('search-color').value;
             const frameType = document.getElementById('search-frame-type').value;
 
-            // Gabungkan query teks manual dan pilihan dropdown kategori
             let combinedQuery = rawQuery;
             if(category) {
                 combinedQuery = rawQuery ? `${category} ${rawQuery}` : category;
             }
 
-            // Terjemahkan otomatis kata kunci Indonesia ke Bahasa Inggris
             let englishQuery = translateToEnglish(combinedQuery);
-
-            // Gabungkan dengan Tipe Bingkai pilihan (Photo frame, Empty frame, Border, dll)
             let finalQuery = `${englishQuery} ${frameType}`.trim();
 
             const initialState = document.getElementById('search-initial-state');
@@ -1285,13 +1336,12 @@
             grid.innerHTML = '';
 
             try {
-                // Membangun URL API Pixabay dengan query terjemahan bahasa Inggris & tipe bingkai
                 let apiUrl = `https://pixabay.com/api/?key=${PIXABAY_API_KEY}&q=${encodeURIComponent(finalQuery)}&image_type=illustration&per_page=${perPage}&page=${currentSearchPage}&safesearch=true`;
                 
                 if(color && color !== 'transparent') {
                     apiUrl += `&colors=${color}`;
                 } else if (color === 'transparent') {
-                    apiUrl += `&colors=transparent`; // Pixabay mendukung filter transparent
+                    apiUrl += `&colors=transparent`; 
                 }
 
                 const response = await fetch(apiUrl);
@@ -1313,7 +1363,6 @@
                         div.className = "bg-white rounded-xl overflow-hidden shadow-sm border border-gray-200 hover:border-indigo-400 hover:shadow-md cursor-pointer transition-all flex flex-col relative group h-40";
                         div.onclick = () => selectOnlineFrame(hit.largeImageURL);
                         
-                        // Pratinjau dengan latar belakang pola catur (transparan grid) agar area bolong terlihat
                         div.innerHTML = `
                             <div class="h-full w-full relative" style="background-image: linear-gradient(45deg, #e5e7eb 25%, transparent 25%), linear-gradient(-45deg, #e5e7eb 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #e5e7eb 75%), linear-gradient(-45deg, transparent 75%, #e5e7eb 75%); background-size: 16px 16px; background-position: 0 0, 0 8px, 8px -8px, -8px 0px;">
                                 <img src="${hit.previewURL}" class="w-full h-full object-contain absolute z-10 p-2" loading="lazy" alt="Bingkai">
@@ -1325,21 +1374,19 @@
                         grid.appendChild(div);
                     });
                     
-                    // Update Pagination UI
                     updatePaginationUI();
                     
                 } else {
                     errorContainer.classList.remove('hidden');
-                    errorText.innerHTML = `Tidak ada bingkai ditemukan untuk kata kunci <strong>"${finalQuery}"</strong>.<br>Coba gunakan kata kunci yang lebih umum.`;
+                    errorText.innerHTML = currentLang === 'id' ? `Tidak ada bingkai ditemukan untuk kata kunci <strong>"${finalQuery}"</strong>.<br>Coba gunakan kata kunci yang lebih umum.` : `No frames found for keyword <strong>"${finalQuery}"</strong>.<br>Try using more general keywords.`;
                 }
             } catch (err) {
                 loading.classList.add('hidden');
                 errorContainer.classList.remove('hidden');
-                // Penanganan Error spesifik
                 if (err.message.includes("Failed to fetch") || !navigator.onLine) {
-                    errorText.innerHTML = "Gagal mengambil data dari server. <br><strong>Periksa koneksi internet Anda.</strong>";
+                    errorText.innerHTML = currentLang === 'id' ? "Gagal mengambil data dari server. <br><strong>Periksa koneksi internet Anda.</strong>" : "Failed to fetch data from server. <br><strong>Check your internet connection.</strong>";
                 } else {
-                    errorText.innerHTML = `Terjadi kendala pada server pencarian.<br><span class="text-xs">Detail: ${err.message}</span>`;
+                    errorText.innerHTML = currentLang === 'id' ? `Terjadi kendala pada server pencarian.<br><span class="text-xs">Detail: ${err.message}</span>` : `Search server encountered an issue.<br><span class="text-xs">Details: ${err.message}</span>`;
                 }
                 console.error("Search Error:", err);
             }
@@ -1353,10 +1400,9 @@
             
             const maxPages = Math.ceil(currentTotalHits / perPage);
             
-            // Tampilkan navigasi hanya jika ada hasil
             if(currentTotalHits > 0) {
                 pagination.classList.remove('hidden');
-                indicator.innerText = `Hal ${currentSearchPage} dari ${Math.min(maxPages, 25)}`; // Pixabay membatasi max 500 hit (25 hal)
+                indicator.innerText = currentLang === 'id' ? `Hal ${currentSearchPage} dari ${Math.min(maxPages, 25)}` : `Page ${currentSearchPage} of ${Math.min(maxPages, 25)}`; 
                 
                 btnPrev.disabled = currentSearchPage <= 1;
                 btnNext.disabled = currentSearchPage >= maxPages || currentSearchPage >= 25;
@@ -1365,14 +1411,11 @@
             }
         }
         
-
         function selectOnlineFrame(imageUrl) {
-            // Tampilkan loading state atau langsung ubah
             toggleModal('search-modal');
             
-            // Load gambar melalui CORS proxy jika perlu, atau langsung jika server mengizinkan
             const img = new Image();
-            img.crossOrigin = "Anonymous"; // Sangat penting agar tidak mencemari canvas (Tainted Canvas)
+            img.crossOrigin = "Anonymous"; 
             
             img.onload = () => {
                 saveState();
@@ -1389,20 +1432,18 @@
             };
             
             img.onerror = () => {
-                alert("Gagal memuat bingkai secara langsung karena pembatasan keamanan (CORS). Silakan unduh gambar secara manual lalu gunakan fitur Upload.");
+                alert(currentLang === 'id' ? "Gagal memuat bingkai secara langsung karena pembatasan keamanan (CORS). Silakan unduh gambar secara manual lalu gunakan fitur Upload." : "Failed to load frame directly due to security restrictions (CORS). Please download the image manually and use the Upload feature.");
             };
 
             img.src = imageUrl;
         }
         
-        // --- Export (Download) ---
         function downloadTwibbon() {
-            if(!layers.frame.img && !layers.photo.img) { alert("Area kanvas masih kosong!"); return; }
+            if(!layers.frame.img && !layers.photo.img) { alert(currentLang === 'id' ? "Area kanvas masih kosong!" : "Canvas area is still empty!"); return; }
             
             const quality = parseInt(document.getElementById('export-quality').value);
             let outW, outH;
             
-            // Kalkulasi resolusi akhir sesuai standar potrait / landscape / kotak
             if(currentRatio === '1:1') { 
                 outW = quality; outH = quality; 
             } else if(currentRatio === '9:16') { 
@@ -1423,7 +1464,6 @@
 
             if(layers.photo.img) {
                 outCtx.save();
-                
                 let p = layers.photo;
                 outCtx.translate(p.x * ratioX, p.y * ratioY);
                 outCtx.rotate(p.rot * Math.PI / 180);
